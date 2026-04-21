@@ -1,48 +1,61 @@
 <?php
-
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
+use App\Models\Edificio;
+use App\Models\Incidencia;
+use App\Models\ComentarioIncidencia;
+use App\Models\PropietarioPerfil;
+use App\Models\EmpleadoPerfil;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
     protected $fillable = [
-        'name',
+        'username',
         'email',
         'password',
+        'role',
+        'subrole'
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
+    //Si NO es admin → pertenece a un edificio
+    public function edificio()
     {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
+        return $this->belongsTo(Edificio::class);
+    }
+
+    // Admin → muchos edificios
+    public function edificiosAdmin()
+    {
+        return $this->belongsToMany(Edificio::class, 'admin_edificio');
+    }
+
+    // Incidencias creadas
+    public function incidencias()
+    {
+        return $this->hasMany(Incidencia::class);
+    }
+
+    // Comentarios
+    public function comentarios()
+    {
+        return $this->hasMany(ComentarioIncidencia::class);
+    }
+
+    //Perfil propietario
+    public function propietarioPerfil()
+    {
+        return $this->hasOne(PropietarioPerfil::class);
+    }
+
+    // Perfil empleado
+    public function empleadoPerfil()
+    {
+        return $this->hasOne(EmpleadoPerfil::class);
     }
 }

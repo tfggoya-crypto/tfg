@@ -3,17 +3,22 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Incidencia extends Model
 {
-    use HasFactory;
+    protected $fillable = [
+        'titulo',
+        'descripcion',
+        'estado',
+        'prioridad',
+        'user_id',
+        'edificio_id',
+        'asignado_a'
+    ];
 
-    protected $fillable = ['descripcion','prioridad','estado','usuario_id','edificio_id'];
-
-    public function usuario()
+    public function user()
     {
-        return $this->belongsTo(Usuario::class);
+        return $this->belongsTo(User::class);
     }
 
     public function edificio()
@@ -21,8 +26,13 @@ class Incidencia extends Model
         return $this->belongsTo(Edificio::class);
     }
 
+    public function asignado()
+    {
+        return $this->belongsTo(User::class, 'asignado_a');
+    }
+
     public function comentarios()
     {
-        return $this->hasMany(Comentario::class);
+        return $this->hasMany(ComentarioIncidencia::class);
     }
 }
