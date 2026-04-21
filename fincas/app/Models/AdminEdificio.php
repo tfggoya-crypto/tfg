@@ -4,19 +4,22 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PropietarioPerfil extends Model
+class AdminEdificio extends Model
 {
-    protected $table = 'propietario_perfil';
+    protected $table = 'admin_edificio';
 
     protected $fillable = [
         'user_id',
-        'dni',
-        'telefono',
-        'numero_vivienda'
+        'edificio_id'
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function edificio()
+    {
+        return $this->belongsTo(Edificio::class);
     }
 }

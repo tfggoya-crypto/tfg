@@ -6,9 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class EmpleadoPerfil extends Model
 {
+    protected $table = 'empleado_perfil';
+
     protected $fillable = [
         'user_id',
-        'tipo_empleado',
         'horario',
         'salario'
     ];

@@ -22,6 +22,7 @@ return new class extends Migration
 
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('edificio_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('asignado_a')->nullable()->constrained('users')->nullOnDelete();
 
 
             $table->timestamps();

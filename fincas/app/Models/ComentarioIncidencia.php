@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class ComentarioIncidencia extends Model
 {
+    protected $table = 'comentarios_incidencias';
+
     protected $fillable = [
         'texto',
         'incidencia_id',
