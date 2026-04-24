@@ -9,11 +9,16 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->string('nombre');
             $table->string('username')->unique();
             $table->string('email')->unique();
             $table->string('password');
             $table->enum('role', ['admin', 'propietario', 'empleado']);
             $table->enum('subrole', ['presidente', 'vecino', 'conserje', 'jardinero', 'limpieza', 'otros'])->nullable();
+            $table->foreignId('edificio_id')
+                ->nullable()
+                ->constrained('edificios')
+                ->nullOnDelete();
             $table->rememberToken();
             $table->timestamps();
         });

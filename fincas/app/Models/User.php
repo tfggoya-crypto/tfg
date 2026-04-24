@@ -11,11 +11,13 @@ use App\Models\EmpleadoPerfil;
 class User extends Authenticatable
 {
     protected $fillable = [
+        'nombre',
         'username',
         'email',
         'password',
         'role',
-        'subrole'
+        'subrole',
+        'edificio_id'
     ];
 
     protected $hidden = [
