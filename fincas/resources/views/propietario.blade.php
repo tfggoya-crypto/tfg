@@ -1,11 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vecino</title>
-</head>
-<body>
-    <h1>Vecino</h1>
-</body>
-</html>
+@extends('layouts.app')
+
+@section('title','Login')
+
+@section('content')
+
+    <h1>Propietario</h1>
+
+
+@endsection

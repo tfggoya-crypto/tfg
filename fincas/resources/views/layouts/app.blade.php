@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <title>@yield('title')</title>
 
+    <!-- 🔐 CSRF TOKEN (IMPORTANTE) -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
@@ -17,12 +20,13 @@
     <div class="container">
         <span class="navbar-brand">Administración de Fincas</span>
 
-        @if(session('usuario'))
-        <form method="POST" action="/logout">
+        <!-- ✅ USAR AUTH, NO SESSION -->
+        @auth
+        <form method="POST" action="{{ route('logout') }}">
             @csrf
             <button class="btn btn-outline-light btn-sm">Logout</button>
         </form>
-        @endif
+        @endauth
     </div>
 </nav>
 
