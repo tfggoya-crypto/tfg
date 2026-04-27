@@ -1,39 +1,41 @@
-<!-- resources/views/login.blade.php -->
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body class="bg-light">
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-4">
-            <div class="card shadow">
-                <div class="card-header text-center">
-                    <h4>Iniciar sesión</h4>
+@extends('layouts.app')
+
+@section('title','Login')
+
+@section('content')
+<div class="row justify-content-center">
+    <div class="col-md-4">
+        <div class="card p-4">
+            <h4 class="mb-3 text-center">Iniciar sesión</h4>
+
+            @if($errors->any())
+                <div class="alert alert-danger">
+                    {{ $errors->first() }}
                 </div>
-                <div class="card-body">
-                    @if(session('error'))
-                        <div class="alert alert-danger">{{ session('error') }}</div>
-                    @endif
-                    <form method="POST" action="{{ url('/login') }}">
-                        @csrf
-                        <div class="mb-3">
-                            <label for="username" class="form-label">Usuario</label>
-                            <input type="text" class="form-control" name="username" id="username" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Contraseña</label>
-                            <input type="password" class="form-control" name="password" id="password" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary w-100">Entrar</button>
-                    </form>
+            @endif
+
+            <form method="POST" action="/login">
+                @csrf
+
+                <div class="mb-3">
+                    <label>Usuario</label>
+                    <input type="text" name="username" class="form-control" value="{{ old('username') }}" required>
+                    @error('username')
+                        <div class="text-danger small mt-1">{{ $message }}</div>
+                    @enderror
                 </div>
-            </div>
+
+                <div class="mb-3">
+                    <label>Contraseña</label>
+                    <input type="password" name="password" class="form-control" required>
+                    @error('password')
+                        <div class="text-danger small mt-1">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <button class="btn btn-primary w-100">Entrar</button>
+            </form>
         </div>
     </div>
 </div>
-</body>
-</html>
+@endsection

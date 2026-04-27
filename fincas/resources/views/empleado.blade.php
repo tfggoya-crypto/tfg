@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome</title>
+    <title>Empleado</title>
 </head>
 <body>
-    <h1>Pagina de gestion de comunidades de vecinos</h1>
-    <a href="/login">Iniciar sesión</a>
+    <h1>Empleado</h1>
 </body>
 </html>
