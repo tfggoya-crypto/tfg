@@ -6,6 +6,8 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PropietarioController;
 use App\Http\Controllers\EmpleadoController;
 use App\Http\Middleware\RoleAdminMiddleware;
+use App\Http\Middleware\RolePropietarioMiddleware;
+use App\Http\Middleware\RoleEmpleadoMiddleware;
 
 // Página principal
 Route::get('/', fn() => view('welcome'));
@@ -19,7 +21,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/admin', [AdminController::class, 'index'])->middleware(RoleAdminMiddleware::class);
 
 // Propietario
-Route::get('/propietario', [PropietarioController::class, 'index']);
+Route::get('/propietario', [PropietarioController::class, 'index'])->middleware(RolePropietarioMiddleware::class);
 
 // Empleado
-Route::get('/empleado', [EmpleadoController::class, 'index']);
+Route::get('/empleado', [EmpleadoController::class, 'index'])->middleware(RoleEmpleadoMiddleware::class);
