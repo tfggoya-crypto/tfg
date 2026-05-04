@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PropietarioController;
 use App\Http\Controllers\EmpleadoController;
+use App\Http\Controllers\EdificioController;
 use App\Http\Middleware\RoleAdminMiddleware;
 use App\Http\Middleware\RolePropietarioMiddleware;
 use App\Http\Middleware\RoleEmpleadoMiddleware;
@@ -25,3 +26,10 @@ Route::get('/propietario', [PropietarioController::class, 'index'])->middleware(
 
 // Empleado
 Route::get('/empleado', [EmpleadoController::class, 'index'])->middleware(RoleEmpleadoMiddleware::class);
+
+// Edificio
+Route::get('/edificios', [EdificioController::class, 'index'])
+    ->name('edificios.index');
+Route::get('/edificios/{edificio}', [EdificioController::class, 'show'])
+    ->middleware(['auth'])
+    ->name('edificios.show');

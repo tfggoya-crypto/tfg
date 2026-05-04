@@ -8,6 +8,8 @@ class AdminController extends Controller
 {
     public function index()
     {
-        return view('admin');
+        return view('admin.admin');
     }
 }
+
+// TODO implementar en la pantalla principal listado de incidencias y edificios mediante JS
