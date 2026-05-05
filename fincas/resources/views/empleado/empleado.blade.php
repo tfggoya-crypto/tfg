@@ -8,6 +8,22 @@
 
     <h2 class="mb-4 fw-bold">Bienvenido, {{ auth()->user()->nombre }}</h2>
 
+    @if(session('success'))
+        <div class="alert alert-success" id="success-alert">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    @if($errors->any())
+        <div class="alert alert-danger">
+            <ul class="mb-0">
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <div class="row g-4">
 
         <!-- TARJETA 1: EDIFICIO -->
@@ -186,9 +202,33 @@
                                         Estado: {{ $incidencia->estado }}
                                     </small>
                                     <br>
-                                    <button class="btn btn-primary mt-3">
-                                        Cambiar Estado
-                                    </button>
+                                    <div class="d-flex gap-2 mt-3 flex-wrap">
+                                        <form method="POST" action="{{ route('incidencias.estado', $incidencia) }}" id="formEstado-{{ $incidencia->id }}">
+                                            @csrf
+                                            @method('PATCH')
+                                            <select class="form-select" name="estado" data-incidencia-id="{{ $incidencia->id }}" onchange="setEstadoIncidencia(this)">
+                                                <option value="pendiente" @selected($incidencia->estado === 'pendiente')>
+                                                    Pendiente
+                                                </option>
+                                                <option value="en_proceso" @selected($incidencia->estado === 'en_proceso')>
+                                                    En proceso
+                                                </option>
+                                                <option value="resuelta" @selected($incidencia->estado === 'resuelta')>
+                                                    Resuelta
+                                                </option>
+                                            </select>
+                                        </form>
+
+                                        <button type="button"
+                                                class="btn btn-danger"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#modalEliminarIncidencia"
+                                                data-action="{{ route('incidencias.destroy', $incidencia) }}"
+                                                data-titulo="{{ $incidencia->titulo }}"
+                                                onclick="setDeleteIncidenciaAction(this)">
+                                            Eliminar incidencia
+                                        </button>
+                                    </div>
                                 </li>
 
                             @endforeach
@@ -210,6 +250,68 @@
     </div>
 
 
+    <!-- MODAL CAMBIAR ESTADO -->
+    <div class="modal fade" id="modalCambiarEstadoIncidencia" tabindex="-1">
+        <div class="modal-dialog modal-right-estados mt-5">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">Cambiar estado de incidencia</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    <p id="textoCambiarEstadoIncidencia" class="mb-0">¿Estás seguro de cambiar el estado de esta incidencia?</p>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Cancelar
+                    </button>
+
+                    <button type="button" class="btn btn-warning" onclick="confirmarCambioEstado()">
+                        Cambiar estado
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- MODAL ELIMINAR INCIDENCIA -->
+    <div class="modal fade" id="modalEliminarIncidencia" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">Eliminar incidencia</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    <p id="textoEliminarIncidencia" class="mb-0">¿Estás seguro de eliminar esta incidencia?</p>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Cancelar
+                    </button>
+
+                    <form method="POST" id="formEliminarIncidencia" action="">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger">
+                            Eliminar
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
     <!-- MODAL AGREGAR INCIDENCIA -->
     <div class="modal fade" id="modaladdIncidencias" tabindex="-1">
         <div class="modal-dialog">
@@ -222,7 +324,7 @@
 
                 <div class="modal-body">
 
-                    <form method="POST" action="">
+                    <form method="POST" action="{{ route('incidencias.store') }}">
                         @csrf
 
                         <div class="mb-3">
@@ -237,14 +339,12 @@
 
                         <div class="mb-3">
                             <label class="form-label">Prioridad</label>
-                            <select class="form-select" name="estado" required>
+                            <select class="form-select" name="prioridad" required>
                                 <option value="baja">Baja</option>
                                 <option value="media">Media</option>
                                 <option value="alta">Alta</option>
                             </select>
                         </div>
-
-                        <input type="hidden" name="edificio_id" value="{{ auth()->user()->edificio->id }}">
 
                         <button type="submit" class="btn btn-primary">
                             Agregar Incidencia
@@ -347,5 +447,105 @@
 
 
 </div>
+
+@if(session('success'))
+    <script>
+        setTimeout(function () {
+            const alert = document.getElementById('success-alert');
+            if (alert) {
+                alert.classList.add('fade');
+                alert.classList.remove('show');
+                setTimeout(function () {
+                    alert.remove();
+                }, 300);
+            }
+        }, 3000);
+    </script>
+@endif
+
+<script>
+    let estadoIncidenciaActivo = null;
+    let reabrirModalIncidencias = false;
+
+    function setEstadoIncidencia(select) {
+        const incidenciaId = select.getAttribute('data-incidencia-id');
+        estadoIncidenciaActivo = incidenciaId;
+        reabrirModalIncidencias = true;
+
+        const texto = document.getElementById('textoCambiarEstadoIncidencia');
+        const opcion = select.options[select.selectedIndex];
+
+        if (texto) {
+            texto.textContent = opcion && opcion.textContent
+                ? `¿Estás seguro de cambiar el estado a "${opcion.textContent.trim()}"?`
+                : '¿Estás seguro de cambiar el estado de esta incidencia?';
+        }
+
+        const modalIncidenciasEl = document.getElementById('modalIncidencias');
+        const modalCambiarEl = document.getElementById('modalCambiarEstadoIncidencia');
+        const modalIncidencias = bootstrap.Modal.getInstance(modalIncidenciasEl);
+
+        if (modalIncidencias) {
+            modalIncidenciasEl.addEventListener('hidden.bs.modal', function () {
+                const modalCambiar = new bootstrap.Modal(modalCambiarEl);
+                modalCambiar.show();
+            }, { once: true });
+
+            modalIncidencias.hide();
+        } else {
+            const modalCambiar = new bootstrap.Modal(modalCambiarEl);
+            modalCambiar.show();
+        }
+    }
+
+    function confirmarCambioEstado() {
+        if (!estadoIncidenciaActivo) {
+            return;
+        }
+
+        const form = document.getElementById(`formEstado-${estadoIncidenciaActivo}`);
+        if (form) {
+            form.submit();
+        }
+
+        const modalEl = document.getElementById('modalCambiarEstadoIncidencia');
+        const modal = bootstrap.Modal.getInstance(modalEl);
+        if (modal) {
+            modal.hide();
+        }
+
+        reabrirModalIncidencias = false;
+        estadoIncidenciaActivo = null;
+    }
+
+    document.getElementById('modalCambiarEstadoIncidencia').addEventListener('hidden.bs.modal', function () {
+        if (reabrirModalIncidencias) {
+            const modalIncidenciasEl = document.getElementById('modalIncidencias');
+            const modalIncidencias = new bootstrap.Modal(modalIncidenciasEl);
+            modalIncidencias.show();
+        }
+
+        reabrirModalIncidencias = false;
+        estadoIncidenciaActivo = null;
+    });
+
+    function setDeleteIncidenciaAction(button) {
+        const form = document.getElementById('formEliminarIncidencia');
+        const texto = document.getElementById('textoEliminarIncidencia');
+
+        if (form) {
+            form.action = button.getAttribute('data-action');
+        }
+
+        if (texto) {
+            const titulo = button.getAttribute('data-titulo');
+            texto.textContent = titulo
+                ? `¿Estás seguro de eliminar la incidencia "${titulo}"?`
+                : '¿Estás seguro de eliminar esta incidencia?';
+        }
+    }
+</script>
+
+
 
 @endsection

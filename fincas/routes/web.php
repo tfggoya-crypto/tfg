@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PropietarioController;
 use App\Http\Controllers\EmpleadoController;
+use App\Http\Controllers\IncidenciaController;
 use App\Http\Controllers\EdificioController;
 use App\Http\Middleware\RoleAdminMiddleware;
 use App\Http\Middleware\RolePropietarioMiddleware;
@@ -26,6 +27,15 @@ Route::get('/propietario', [PropietarioController::class, 'index'])->middleware(
 
 // Empleado
 Route::get('/empleado', [EmpleadoController::class, 'index'])->middleware(RoleEmpleadoMiddleware::class);
+Route::post('/incidencias', [IncidenciaController::class, 'store'])
+    ->middleware(['auth', RoleEmpleadoMiddleware::class])
+    ->name('incidencias.store');
+Route::patch('/incidencias/{incidencia}/estado', [IncidenciaController::class, 'cambiarEstado'])
+    ->middleware(['auth', RoleEmpleadoMiddleware::class])
+    ->name('incidencias.estado');
+Route::delete('/incidencias/{incidencia}', [IncidenciaController::class, 'destroy'])
+    ->middleware(['auth', RoleEmpleadoMiddleware::class])
+    ->name('incidencias.destroy');
 
 // Edificio
 Route::get('/edificios', [EdificioController::class, 'index'])
