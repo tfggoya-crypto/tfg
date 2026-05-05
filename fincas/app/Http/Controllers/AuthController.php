@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
@@ -56,5 +57,30 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/login');
+    }
+
+    public function changePassword(Request $request)
+    {
+        $validated = $request->validate([
+            'current_password' => ['required'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ], [
+            'password.min' => 'La contraseña tiene que tener 8 caracteres.',
+            'password.confirmed' => 'La contraseña nueva no coincide con la confirmación.',
+        ]);
+
+        $user = $request->user();
+
+        if (! Hash::check($validated['current_password'], $user->password)) {
+            return back()->withErrors([
+                'current_password' => 'La contraseña actual no es correcta.',
+            ]);
+        }
+
+        $user->update([
+            'password' => Hash::make($validated['password']),
+        ]);
+
+        return back()->with('success', 'Contraseña actualizada correctamente.');
     }
 }

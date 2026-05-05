@@ -27,6 +27,9 @@ Route::get('/propietario', [PropietarioController::class, 'index'])->middleware(
 
 // Empleado
 Route::get('/empleado', [EmpleadoController::class, 'index'])->middleware(RoleEmpleadoMiddleware::class);
+Route::post('/empleado/cambiar-password', [AuthController::class, 'changePassword'])
+    ->middleware(['auth', RoleEmpleadoMiddleware::class])
+    ->name('empleado.password.update');
 Route::post('/incidencias', [IncidenciaController::class, 'store'])
     ->middleware(['auth', RoleEmpleadoMiddleware::class])
     ->name('incidencias.store');

@@ -411,7 +411,7 @@
 
                 <div class="modal-body">
 
-                    <form method="POST" action="">
+                    <form method="POST" action="{{ route('empleado.password.update') }}">
                         @csrf
 
                         <div class="mb-3">
