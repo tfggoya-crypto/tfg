@@ -66,8 +66,7 @@ class EdificioController extends Controller
             $edificio->admins()->attach(auth()->id());
         });
 
-        return redirect()
-            ->route('edificios.index')
+        return redirect('/admin')
             ->with('success', 'Edificio creado correctamente');
     }
 
@@ -88,13 +87,6 @@ class EdificioController extends Controller
             abort(403);
         }
 
-        $request->validate([
-            'nombre' => 'required|string|max:255',
-            'direccion' => 'required|string|max:255',
-            'ciudad' => 'required|string|max:255',
-            'codigo_postal' => 'required|string|max:10',
-        ]);
-
         $edificio->update($request->only([
             'nombre',
             'direccion',
@@ -102,25 +94,21 @@ class EdificioController extends Controller
             'codigo_postal'
         ]));
 
-        return redirect()
-            ->route('edificios.index')
+        return redirect('/admin')
             ->with('success', 'Edificio actualizado correctamente');
     }
 
     // Eliminar
     public function destroy(Edificio $edificio)
-    {
-        if (!$edificio->admins->contains(auth()->id())) {
-            abort(403);
-        }
-
-        DB::transaction(function () use ($edificio) {
-            $edificio->admins()->detach();
-            $edificio->delete();
-        });
-
-        return redirect()
-            ->route('edificios.index')
-            ->with('success', 'Edificio eliminado correctamente');
+{
+    if (!$edificio->admins->contains(auth()->id())) {
+        abort(403);
     }
+
+    $edificio->admins()->detach();
+    $edificio->delete();
+
+    return redirect('/admin')
+        ->with('success', 'Edificio eliminado correctamente');
+}
 }

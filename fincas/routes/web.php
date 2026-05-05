@@ -44,6 +44,16 @@ Route::delete('/incidencias/{incidencia}', [IncidenciaController::class, 'destro
 // Edificio
 Route::get('/edificios', [EdificioController::class, 'index'])
     ->name('edificios.index');
+
 Route::get('/edificios/{edificio}', [EdificioController::class, 'show'])
     ->middleware(['auth'])
     ->name('edificios.show');
+
+Route::post('/edificios', [EdificioController::class, 'store'])
+    ->name('edificios.store');
+
+Route::put('/edificios/{edificio}', [EdificioController::class, 'update'])
+    ->name('edificios.update');
+    
+Route::delete('/edificios/{edificio}', [EdificioController::class, 'destroy'])
+    ->name('edificios.destroy');
