@@ -14,6 +14,7 @@ use App\Http\Middleware\RoleEmpleadoMiddleware;
 // Página principal
 Route::get('/', fn() => view('welcome'));
 Route::get('/contacto', fn() => view('contacto'))->name('contacto');
+Route::get('/acercade', fn() => view('acercade'))->name('acercade');
 
 // Login
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');

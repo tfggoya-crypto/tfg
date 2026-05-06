@@ -56,7 +56,7 @@
     <div class="d-flex gap-3 position-absolute start-50 translate-middle-x">
       <a href="/" class="nav-link text-light">Inicio</a>
       <a href="/contacto" class="nav-link text-light">Contacto</a>
-      <a href="#" class="nav-link text-light">Acerca de</a>
+      <a href="/acercade" class="nav-link text-light">Acerca de</a>
     </div>
 
     <!-- DERECHA -->
