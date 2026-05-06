@@ -72,4 +72,4 @@
 
 @include('admin.partials.edificio.eliminar-edificio-modal')
 
-<script src="{{ asset('js/admin/edificio.js') }}"></script>
+<script src="{{ asset('js/admin/modificar.js') }}"></script>

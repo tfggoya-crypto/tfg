@@ -1,48 +1,119 @@
-<div class="modal fade" id="modaladdIncidencias" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
+<div class="modal fade"
+     id="crearIncidenciaModal"
+     tabindex="-1">
 
-                <div class="modal-header">
-                    <h5 class="modal-title">Agregar Incidencia</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
+    <div class="modal-dialog">
 
+        <div class="modal-content">
+
+            <!-- HEADER -->
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    Crear incidencia
+                </h5>
+
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal">
+                </button>
+            </div>
+
+            <!-- FORM -->
+            <form method="POST"
+                  action="{{ route('admin.incidencias.store') }}">
+
+                @csrf
+
+                <!-- BODY -->
                 <div class="modal-body">
 
-                    <form method="POST" action="{{ route('incidencias.store') }}">
-                        @csrf
+                    <!-- TÍTULO -->
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">
+                            Título *
+                        </label>
 
-                        <div class="mb-3">
-                            <label class="form-label">Título</label>
-                            <input type="text" class="form-control" name="titulo" required>
-                        </div>
+                        <input type="text"
+                               name="titulo"
+                               class="form-control"
+                               required>
+                    </div>
 
-                        <div class="mb-3">
-                            <label class="form-label">Descripción</label>
-                            <textarea class="form-control" name="descripcion" rows="3" required></textarea>
-                        </div>
+                    <!-- DESCRIPCIÓN -->
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">
+                            Descripción *
+                        </label>
 
-                        <div class="mb-3">
-                            <label class="form-label">Prioridad</label>
-                            <select class="form-select" name="prioridad" required>
-                                <option value="baja">Baja</option>
-                                <option value="media">Media</option>
-                                <option value="alta">Alta</option>
-                            </select>
-                        </div>
+                        <textarea name="descripcion"
+                                  class="form-control"
+                                  rows="3"
+                                  required></textarea>
+                    </div>
 
-                        <button type="submit" class="btn btn-primary">
-                            Agregar Incidencia
-                        </button>
+                    <!-- PRIORIDAD -->
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">
+                            Prioridad
+                        </label>
 
-                    </form>
+                        <select name="prioridad"
+                                class="form-select">
+
+                            <option value="baja">Baja</option>
+                            <option value="media">Media</option>
+                            <option value="alta">Alta</option>
+
+                        </select>
+                    </div>
+
+                    <!-- EDIFICIO (CLAVE) -->
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">
+                            Edificio *
+                        </label>
+
+                        <select name="edificio_id"
+                                class="form-select"
+                                required>
+
+                            @forelse(auth()->user()->edificiosAdmin as $edificio)
+
+                                <option value="{{ $edificio->id }}">
+                                    {{ $edificio->nombre }} ({{ $edificio->ciudad }})
+                                </option>
+
+                            @empty
+
+                                <option disabled selected>
+                                    No tienes edificios asignados
+                                </option>
+
+                            @endforelse
+
+                        </select>
+                    </div>
 
                 </div>
 
+                <!-- FOOTER -->
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+
+                    <button class="btn btn-secondary"
+                            data-bs-dismiss="modal">
+                        Cancelar
+                    </button>
+
+                    <button class="btn btn-success">
+                        Crear incidencia
+                    </button>
+
                 </div>
 
-            </div>
+            </form>
+
         </div>
+
     </div>
+
+</div>

@@ -37,10 +37,8 @@ Route::post('/incidencias', [IncidenciaController::class, 'store'])
 Route::patch('/incidencias/{incidencia}/estado', [IncidenciaController::class, 'cambiarEstado'])
     ->middleware(['auth', RoleEmpleadoMiddleware::class])
     ->name('incidencias.estado');
-Route::delete('/incidencias/{incidencia}', [IncidenciaController::class, 'destroy'])
-    ->middleware(['auth', RoleEmpleadoMiddleware::class])
-    ->name('incidencias.destroy');
 
+    
 // Edificio
 Route::get('/edificios', [EdificioController::class, 'index'])
     ->name('edificios.index');
@@ -57,3 +55,22 @@ Route::put('/edificios/{edificio}', [EdificioController::class, 'update'])
     
 Route::delete('/edificios/{edificio}', [EdificioController::class, 'destroy'])
     ->name('edificios.destroy');
+
+
+// Incidencia
+Route::put('/incidencias/{incidencia}', [IncidenciaController::class, 'update'])
+    ->name('incidencias.update');
+
+Route::patch('/incidencias/{incidencia}/estado', [IncidenciaController::class, 'cambiarEstado'])
+    ->name('incidencias.estado');
+
+Route::patch('/incidencias/{incidencia}/prioridad', [IncidenciaController::class, 'cambiarPrioridad'])
+    ->name('incidencias.prioridad');
+
+Route::post('/admin/incidencias', [IncidenciaController::class, 'storeAdmin'])
+    ->middleware(['auth', RoleAdminMiddleware::class])
+    ->name('admin.incidencias.store');
+
+Route::delete('/incidencias/{incidencia}', [IncidenciaController::class, 'destroy'])
+    ->middleware(['auth'])
+    ->name('incidencias.destroy');

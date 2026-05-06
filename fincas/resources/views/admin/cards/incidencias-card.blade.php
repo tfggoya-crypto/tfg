@@ -74,5 +74,13 @@
 
 @include('admin.partials.incidencias.lista-incidencia-modal')
 
+@include('admin.partials.incidencias.detalle-incidencia-modal')
 
+@include('admin.partials.incidencias.modificar-incidencia-modal')
+
+@include('admin.partials.incidencias.crear-incidencia-modal')
+
+@include('admin.partials.incidencias.eliminar-incidencia-modal')
+
+<script src="{{ asset('js/admin/modificar.js') }}"></script>
 
