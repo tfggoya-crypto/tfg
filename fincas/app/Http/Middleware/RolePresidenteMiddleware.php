@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
 
-class RolePropietarioMiddleware
+class RolePresidenteMiddleware
 {
     /**
      * Handle an incoming request.
@@ -22,7 +22,7 @@ class RolePropietarioMiddleware
 
         $user = Auth::user();
 
-        if ($user->role !== 'propietario' || $user->subrole !== 'vecino') {
+        if ($user->role !== 'propietario' || $user->subrole !== 'presidente') {
             return redirect('/login')->withErrors([
                 'username' => 'No tienes permiso para acceder a esta sección'
             ]);

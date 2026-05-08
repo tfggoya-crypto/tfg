@@ -5,11 +5,13 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PropietarioController;
 use App\Http\Controllers\EmpleadoController;
+use App\Http\Controllers\PresidenteController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\IncidenciaController;
 use App\Http\Controllers\EdificioController;
 use App\Http\Middleware\RoleAdminMiddleware;
 use App\Http\Middleware\RolePropietarioMiddleware;
+use App\Http\Middleware\RolePresidenteMiddleware;
 use App\Http\Middleware\RoleEmpleadoMiddleware;
 
 // Página principal
@@ -24,6 +26,10 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // Admin
 Route::get('/admin', [AdminController::class, 'index'])->middleware(RoleAdminMiddleware::class);
+
+// Presidente
+Route::get('/presidente', [PresidenteController::class, 'index'])->middleware(RolePresidenteMiddleware::class);
+
 
 // Propietario
 Route::get('/propietario', [PropietarioController::class, 'index'])->middleware(RolePropietarioMiddleware::class);

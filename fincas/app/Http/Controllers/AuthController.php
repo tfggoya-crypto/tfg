@@ -15,7 +15,15 @@ class AuthController extends Controller
         }
 
         if ($user->role === 'propietario') {
-            return redirect('/propietario');
+
+            if($user->subrole === 'presidente') {
+                return redirect('/presidente');
+            }
+            
+            if($user->subrole === 'vecino') {
+            
+                return redirect('/propietario');
+            }
         }
 
         if ($user->role === 'empleado') {

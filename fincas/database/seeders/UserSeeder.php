@@ -32,6 +32,17 @@ class UserSeeder extends Seeder
             'edificio_id' => 1,
         ]);
 
+        // PRESIDENTE DE COMUNIDAD
+        User::create([
+            'nombre' => 'Juan Cuesta',
+            'username' => 'presidente',
+            'email' => 'presidente@test.com',
+            'password' => Hash::make('password'),
+            'role' => 'propietario',
+            'subrole' => 'presidente',
+            'edificio_id' => 1,
+        ]);
+
         // EMPLEADO
         User::create([
             'nombre' => 'Empleado 1',
