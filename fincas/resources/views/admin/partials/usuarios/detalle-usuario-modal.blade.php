@@ -1,111 +1,122 @@
 @foreach(auth()->user()->edificiosAdmin as $edificio)
 
-<div class="modal fade"
-     id="edificioModal{{ $edificio->id }}"
-     tabindex="-1">
+    @foreach($edificio->users as $usuario)
 
-    <div class="modal-dialog">
+        <div class="modal fade"
+             id="userModal{{ $usuario->id }}"
+             tabindex="-1">
 
-        <div class="modal-content">
+            <div class="modal-dialog">
 
-            <!-- HEADER -->
-            <div class="modal-header">
+                <div class="modal-content">
 
-                <h5 class="modal-title">
-                    Detalles del edificio
-                </h5>
+                    <!-- HEADER -->
+                    <div class="modal-header">
 
-                <button type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal">
-                </button>
+                        <h5 class="modal-title fw-bold">
+                            Detalle de usuario
+                        </h5>
 
-            </div>
+                        <button type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal">
+                        </button>
 
-            <!-- BODY -->
-            <div class="modal-body">
+                    </div>
 
-                <p>
-                    <strong>ID:</strong>
-                    {{ $edificio->id }}
-                </p>
+                    <!-- BODY -->
+                    <div class="modal-body">
 
-                <p>
-                    <strong>Nombre:</strong>
-                    {{ $edificio->nombre }}
-                </p>
-
-                <p>
-                    <strong>Dirección:</strong>
-                    {{ $edificio->direccion }}
-                </p>
-
-                <p>
-                    <strong>Código Postal:</strong>
-                    {{ $edificio->codigo_postal }}
-                </p>
-
-                <p>
-                    <strong>Ciudad:</strong>
-                    {{ $edificio->ciudad }}
-                </p>
-
-                <hr>
-
-                <h6 class="fw-bold mb-3">
-                    Administradores asignados
-                </h6>
-
-                @foreach($edificio->admins as $admin)
-
-                    <div class="mb-3">
-
-                        <p class="mb-1">
-                            <strong>Nombre:</strong>
-                            {{ $admin->nombre }}
+                        <p>
+                            <strong>ID:</strong><br>
+                            {{ $usuario->id }}
                         </p>
 
-                        <p class="mb-0">
-                            <strong>Email:</strong>
-                            {{ $admin->email }}
+                        <p>
+                            <strong>Nombre:</strong><br>
+                            {{ $usuario->nombre }}
+                        </p>
+
+                        <p>
+                            <strong>Username:</strong><br>
+                            {{ $usuario->username }}
+                        </p>
+
+                        <p>
+                            <strong>Email:</strong><br>
+                            {{ $usuario->email }}
+                        </p>
+
+                        <hr>
+
+                        <p>
+                            <strong>Rol:</strong><br>
+                            <span class="badge bg-primary">
+                                {{ $usuario->role }}
+                            </span>
+                        </p>
+
+                        <p>
+                            <strong>Subrol:</strong><br>
+                            <span class="badge bg-secondary">
+                                {{ $usuario->subrole ?? 'Sin subrol' }}
+                            </span>
+                        </p>
+
+                        <hr>
+
+                        <p>
+                            <strong>Edificio:</strong><br>
+                            {{ $edificio->nombre }}
+                        </p>
+
+                        <p class="text-muted mb-0">
+                            {{ $edificio->direccion }} · {{ $edificio->ciudad }}
                         </p>
 
                     </div>
 
-                @endforeach
+                    <!-- FOOTER -->
+                    <div class="modal-footer">
 
-            </div>
+                        <!-- CERRAR -->
+                        <button class="btn btn-secondary"
+                                data-bs-dismiss="modal">
 
-            <!-- FOOTER -->
-           <div class="modal-footer d-flex gap-2">
+                            Cerrar
 
-                <button class="btn btn-secondary w-30"
-                        data-bs-dismiss="modal">
-                    Cerrar
-                </button>
+                        </button>
 
-                <button type="button"
-                        class="btn btn-warning w-30"
-                        data-bs-toggle="modal"
-                        data-bs-target="#editarEdificioModal{{ $edificio->id }}"
-                        data-bs-dismiss="modal">
-                    Editar
-                </button>
+                        <!-- EDITAR -->
+                        <button type="button"
+                                class="btn btn-warning"
+                                data-bs-toggle="modal"
+                                data-bs-target="#editarUsuarioModal{{ $usuario->id }}"
+                                data-bs-dismiss="modal">
 
-                <button type="button"
-                        class="btn btn-danger w-30"
-                        data-bs-toggle="modal"
-                        data-bs-target="#eliminarEdificioModal{{ $edificio->id }}"
-                        data-bs-dismiss="modal">
-                    Eliminar
-                </button>
+                            Editar
+
+                        </button>
+
+                        <!-- ELIMINAR -->
+                        <button type="button"
+                                class="btn btn-danger"
+                                data-bs-toggle="modal"
+                                data-bs-target="#eliminarUsuarioModal{{ $usuario->id }}"
+                                data-bs-dismiss="modal">
+
+                            Eliminar
+
+                        </button>
+
+                    </div>
+
+                </div>
 
             </div>
 
         </div>
 
-    </div>
-
-</div>
+    @endforeach
 
 @endforeach

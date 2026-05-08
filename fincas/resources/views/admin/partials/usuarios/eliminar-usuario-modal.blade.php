@@ -1,64 +1,82 @@
 @foreach(auth()->user()->edificiosAdmin as $edificio)
 
-<div class="modal fade"
-     id="eliminarEdificioModal{{ $edificio->id }}"
-     tabindex="-1">
+    @foreach($edificio->users as $usuario)
 
-    <div class="modal-dialog">
+        <div class="modal fade"
+             id="eliminarUsuarioModal{{ $usuario->id }}"
+             tabindex="-1">
 
-        <div class="modal-content">
+            <div class="modal-dialog">
 
-            <div class="modal-header bg-danger text-white">
+                <div class="modal-content">
 
-                <h5 class="modal-title">
-                    Eliminar edificio
-                </h5>
+                    <!-- HEADER -->
+                    <div class="modal-header bg-danger text-white">
 
-                <button type="button"
-                        class="btn-close btn-close-white"
-                        data-bs-dismiss="modal">
-                </button>
+                        <h5 class="modal-title">
+                            Eliminar usuario
+                        </h5>
 
-            </div>
+                        <button type="button"
+                                class="btn-close btn-close-white"
+                                data-bs-dismiss="modal">
+                        </button>
 
-            <div class="modal-body">
+                    </div>
 
-                <p>
-                    ¿Estás seguro de que quieres eliminar
-                    <strong>{{ $edificio->nombre }}</strong>?
-                </p>
+                    <!-- BODY -->
+                    <div class="modal-body">
 
-                <p class="text-danger small">
-                    Esta acción no se puede deshacer.
-                </p>
+                        <p>
+                            ¿Estás seguro de que quieres eliminar al usuario
+                            <strong>{{ $usuario->nombre }}</strong>?
+                        </p>
 
-            </div>
+                        <p class="text-danger small">
+                            Esta acción no se puede deshacer.
+                        </p>
 
-            <div class="modal-footer">
+                        <hr>
 
-                <button class="btn btn-secondary"
-                        data-bs-dismiss="modal">
-                    Cancelar
-                </button>
+                        <p class="mb-0">
+                            <strong>Email:</strong> {{ $usuario->email }}
+                        </p>
 
-                <form action="{{ route('edificios.destroy', $edificio->id) }}"
-                      method="POST">
+                    </div>
 
-                    @csrf
-                    @method('DELETE')
+                    <!-- FOOTER -->
+                    <div class="modal-footer">
 
-                    <button class="btn btn-danger">
-                        Eliminar
-                    </button>
+                        <button class="btn btn-secondary"
+                                data-bs-dismiss="modal">
 
-                </form>
+                            Cancelar
+
+                        </button>
+
+                        <form method="POST"
+                              action="{{ route('users.destroy', $usuario->id) }}">
+
+                            @csrf
+                            @method('DELETE')
+
+                            <button type="submit"
+                                    class="btn btn-danger">
+
+                                Eliminar
+
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </div>
 
             </div>
 
         </div>
 
-    </div>
-
-</div>
+    @endforeach
 
 @endforeach

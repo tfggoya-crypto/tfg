@@ -37,31 +37,35 @@ class UserController extends Controller
     }
 
 
-    public function store(Request $request)
+   public function store(Request $request)
     {
         $validated = $request->validate([
             'nombre' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'unique:users,email'],
-            'password' => ['required', 'string', 'min:6'],
-            'role' => ['required', 'in:empleado,propietario,presidente'],
-            'edificios' => ['required', 'array'],
+            'role' => ['required', 'in:empleado,propietario'],
+            'subrole' => ['nullable', 'in:vecino,presidente,conserje,jardinero,limpieza,otros'],
+            'edificio_id' => ['required', 'exists:edificios,id'],
         ]);
 
         DB::transaction(function () use ($validated) {
 
-            $user = User::create([
+        $username = $this->generarUsername($validated['nombre']);
+
+            User::create([
                 'nombre' => $validated['nombre'],
                 'email' => $validated['email'],
-                'password' => Hash::make($validated['password']),
+                'username' => $username,
+                'password' => Hash::make($username),
                 'role' => $validated['role'],
+                'subrole' => $validated['subrole'] ?? null,
+                'edificio_id' => $validated['edificio_id'],
             ]);
-
-            $user->edificios()->attach($validated['edificios']);
         });
 
-        return redirect()
-            ->route('users.index')
-            ->with('success', 'Usuario creado correctamente');
+        return back()->with(
+            'success',
+            'Usuario creado correctamente'
+        );
     }
 
     public function show(User $user)
@@ -113,9 +117,31 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
-        $user->edificios()->detach();
         $user->delete();
 
         return back()->with('success', 'Usuario eliminado correctamente');
+    }
+
+    private function generarUsername($nombre)
+    {
+        $base = strtolower(trim($nombre));
+
+        $base = preg_replace('/\s+/', '.', $base);
+
+        $base = iconv('UTF-8', 'ASCII//TRANSLIT', $base);
+        $base = preg_replace('/[^a-z0-9\.]/', '', $base);
+
+        $username = $base;
+
+        $contador = 1;
+
+        while (User::where('username', $username)->exists()) {
+
+            $username = $base . $contador;
+
+            $contador++;
+        }
+
+        return $username;
     }
 }

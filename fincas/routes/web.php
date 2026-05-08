@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PropietarioController;
 use App\Http\Controllers\EmpleadoController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\IncidenciaController;
 use App\Http\Controllers\EdificioController;
 use App\Http\Middleware\RoleAdminMiddleware;
@@ -75,3 +76,12 @@ Route::post('/admin/incidencias', [IncidenciaController::class, 'storeAdmin'])
 Route::delete('/incidencias/{incidencia}', [IncidenciaController::class, 'destroy'])
     ->middleware(['auth'])
     ->name('incidencias.destroy');
+
+// Usuario
+Route::post('/users', [UserController::class, 'store'])
+    ->middleware(['auth', RoleAdminMiddleware::class])
+    ->name('users.store');
+Route::put('/users/{user}', [UserController::class, 'update'])
+    ->name('users.update');
+Route::delete('/users/{user}', [UserController::class, 'destroy'])
+    ->name('users.destroy');
