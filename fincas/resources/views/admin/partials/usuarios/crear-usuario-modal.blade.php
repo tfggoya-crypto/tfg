@@ -1,9 +1,6 @@
-<!-- MODAL CREAR EDIFICIO -->
 <div class="modal fade"
-     id="crearEdificioModal"
-     tabindex="-1"
-     aria-labelledby="crearEdificioModalLabel"
-     aria-hidden="true">
+     id="crearUsuarioModal"
+     tabindex="-1">
 
     <div class="modal-dialog">
 
@@ -12,11 +9,8 @@
             <!-- HEADER -->
             <div class="modal-header">
 
-                <h5 class="modal-title fw-bold"
-                    id="crearEdificioModalLabel">
-
-                    Crear edificio
-
+                <h5 class="modal-title fw-bold">
+                    Crear usuario
                 </h5>
 
                 <button type="button"
@@ -27,8 +21,8 @@
             </div>
 
             <!-- FORM -->
-            <form action="{{ route('edificios.store') }}"
-                  method="POST">
+            <form method="POST"
+                  action="{{ route('users.store') }}">
 
                 @csrf
 
@@ -37,7 +31,7 @@
                     <!-- NOMBRE -->
                     <div class="mb-3">
 
-                        <label class="form-label fw-semibold">
+                        <label class="form-label fw-bold">
                             Nombre
                         </label>
 
@@ -48,45 +42,94 @@
 
                     </div>
 
-                    <!-- DIRECCIÓN -->
+                    <!-- EMAIL -->
                     <div class="mb-3">
 
-                        <label class="form-label fw-semibold">
-                            Dirección
+                        <label class="form-label fw-bold">
+                            Email
                         </label>
 
-                        <input type="text"
-                               name="direccion"
+                        <input type="email"
+                               name="email"
                                class="form-control"
                                required>
 
                     </div>
 
-                    <!-- CIUDAD -->
+                   <!-- PERFIL (ROLE + SUBROLE) -->
                     <div class="mb-3">
 
-                        <label class="form-label fw-semibold">
-                            Ciudad
+                        <label class="form-label fw-bold">
+                            Tipo de usuario
                         </label>
 
-                        <input type="text"
-                               name="ciudad"
-                               class="form-control"
-                               required>
+                        <select class="form-select"
+                                id="perfilUsuario"
+                                onchange="rellenarRolSubrol(this)"
+                                required>
+
+                            <option value="">
+                                Selecciona un perfil
+                            </option>
+
+                            <!-- PROPIETARIOS -->
+                            <option value="propietario|vecino">
+                                Vecino
+                            </option>
+
+                            <option value="propietario|presidente">
+                                Presidente
+                            </option>
+
+                            <!-- EMPLEADOS -->
+                            <option value="empleado|conserje">
+                                Conserje
+                            </option>
+
+                            <option value="empleado|jardinero">
+                                Jardinero
+                            </option>
+
+                            <option value="empleado|limpieza">
+                                Limpieza
+                            </option>
+
+                            <option value="empleado|otros">
+                                Otros
+                            </option>
+
+                        </select>
 
                     </div>
 
-                    <!-- CÓDIGO POSTAL -->
+                    <!-- CAMPOS OCULTOS -->
+                    <input type="hidden" name="role" id="roleInput">
+                    <input type="hidden" name="subrole" id="subroleInput">
+
+                    <!-- EDIFICIO -->
                     <div class="mb-3">
 
-                        <label class="form-label fw-semibold">
-                            Código Postal
+                        <label class="form-label fw-bold">
+                            Edificio
                         </label>
 
-                        <input type="text"
-                               name="codigo_postal"
-                               class="form-control"
-                               required>
+                        <select name="edificio_id"
+                                class="form-select"
+                                required>
+
+                            <option value="">
+                                Selecciona un edificio
+                            </option>
+
+                            @foreach(auth()->user()->edificiosAdmin as $edificio)
+
+                                <option value="{{ $edificio->id }}">
+                                    {{ $edificio->nombre }}
+                                </option>
+
+                            @endforeach
+
+                        </select>
 
                     </div>
 
@@ -106,7 +149,7 @@
                     <button type="submit"
                             class="btn btn-success">
 
-                        Crear edificio
+                        Crear usuario
 
                     </button>
 

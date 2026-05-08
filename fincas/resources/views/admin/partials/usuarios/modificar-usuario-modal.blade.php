@@ -1,151 +1,168 @@
 @foreach(auth()->user()->edificiosAdmin as $edificio)
 
-<div class="modal fade"
-     id="editarEdificioModal{{ $edificio->id }}"
-     tabindex="-1">
+    @foreach($edificio->users as $usuario)
 
-    <div class="modal-dialog modal-lg">
+        <div class="modal fade"
+             id="editarUsuarioModal{{ $usuario->id }}"
+             tabindex="-1">
 
-        <div class="modal-content">
+            <div class="modal-dialog">
 
-            <!-- HEADER -->
-            <div class="modal-header">
-                <h5 class="modal-title fw-bold">
-                    Editar edificio
-                </h5>
+                <div class="modal-content">
 
-                <button class="btn-close" data-bs-dismiss="modal"></button>
+                    <!-- HEADER -->
+                    <div class="modal-header">
+
+                        <h5 class="modal-title">
+                            Editar usuario
+                        </h5>
+
+                        <button type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal">
+                        </button>
+
+                    </div>
+
+                    <!-- FORM -->
+                    <form method="POST"
+                          action="{{ route('users.update', $usuario->id) }}">
+
+                        @csrf
+                        @method('PUT')
+
+                        <div class="modal-body">
+
+                            <!-- NOMBRE -->
+                            <div class="mb-3">
+
+                                <label class="form-label fw-bold">
+                                    Nombre
+                                </label>
+
+                                <div class="d-flex gap-2">
+
+                                    <input type="text"
+                                           id="nombre-{{ $usuario->id }}"
+                                           name="nombre"
+                                           value="{{ $usuario->nombre }}"
+                                           class="form-control"
+                                           disabled>
+
+                                    <button type="button"
+                                            class="btn btn-outline-primary"
+                                            onclick="toggleField('nombre-{{ $usuario->id }}')">
+
+                                        Modificar
+
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                            <!-- EMAIL -->
+                            <div class="mb-3">
+
+                                <label class="form-label fw-bold">
+                                    Email
+                                </label>
+
+                                <div class="d-flex gap-2">
+
+                                    <input type="email"
+                                           id="email-{{ $usuario->id }}"
+                                           name="email"
+                                           value="{{ $usuario->email }}"
+                                           class="form-control"
+                                           disabled>
+
+                                    <button type="button"
+                                            class="btn btn-outline-primary"
+                                            onclick="toggleField('email-{{ $usuario->id }}')">
+
+                                        Modificar
+
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                            <hr>
+
+                            <!-- PERFIL (ROLE + SUBROLE) -->
+                            <div class="mb-3">
+
+                                <label class="form-label fw-bold">
+                                    Tipo de usuario
+                                </label>
+
+                                <select name="perfil"
+                                        class="form-select"
+                                        onchange="setUserRole(this, {{ $usuario->id }})">
+
+                                    <option value="">
+                                        Selecciona perfil
+                                    </option>
+
+                                    <option value="propietario|vecino"
+                                        @if($usuario->role=='propietario' && $usuario->subrole=='vecino') selected @endif>
+                                        Vecino
+                                    </option>
+
+                                    <option value="propietario|presidente"
+                                        @if($usuario->role=='propietario' && $usuario->subrole=='presidente') selected @endif>
+                                        Presidente
+                                    </option>
+
+                                    <option value="empleado|conserje"
+                                        @if($usuario->role=='empleado' && $usuario->subrole=='conserje') selected @endif>
+                                        Conserje
+                                    </option>
+
+                                    <option value="empleado|jardinero"
+                                        @if($usuario->role=='empleado' && $usuario->subrole=='jardinero') selected @endif>
+                                        Jardinero
+                                    </option>
+
+                                    <option value="empleado|limpieza"
+                                        @if($usuario->role=='empleado' && $usuario->subrole=='limpieza') selected @endif>
+                                        Limpieza
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                            <!-- CAMPOS OCULTOS -->
+                            <input type="hidden" name="role" id="role-{{ $usuario->id }}">
+                            <input type="hidden" name="subrole" id="subrole-{{ $usuario->id }}">
+
+                        </div>
+
+                        <!-- FOOTER -->
+                        <div class="modal-footer">
+
+                            <button class="btn btn-secondary"
+                                    data-bs-dismiss="modal">
+                                Cancelar
+                            </button>
+
+                            <button class="btn btn-success">
+                                Guardar cambios
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
             </div>
-
-            <!-- FORM -->
-            <form action="{{ route('edificios.update', $edificio->id) }}"
-                  method="POST">
-
-                @csrf
-                @method('PUT')
-
-                <div class="modal-body">
-
-                    <!-- NOMBRE -->
-                    <div class="mb-3">
-
-                        <label class="form-label fw-bold">Nombre</label>
-
-                        <div class="input-group">
-
-                            <input type="text"
-                                   name="nombre"
-                                   value="{{ $edificio->nombre }}"
-                                   class="form-control"
-                                   id="nombre{{ $edificio->id }}"
-                                   disabled>
-
-                            <button type="button"
-                                    class="btn btn-outline-secondary"
-                                    onclick="toggleField('nombre{{ $edificio->id }}')">
-                                Modificar
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                    <!-- DIRECCION -->
-                    <div class="mb-3">
-
-                        <label class="form-label fw-bold">Dirección</label>
-
-                        <div class="input-group">
-
-                            <input type="text"
-                                   name="direccion"
-                                   value="{{ $edificio->direccion }}"
-                                   class="form-control"
-                                   id="direccion{{ $edificio->id }}"
-                                   disabled>
-
-                            <button type="button"
-                                    class="btn btn-outline-secondary"
-                                    onclick="toggleField('direccion{{ $edificio->id }}')">
-                                Modificar
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                    <!-- CIUDAD -->
-                    <div class="mb-3">
-
-                        <label class="form-label fw-bold">Ciudad</label>
-
-                        <div class="input-group">
-
-                            <input type="text"
-                                   name="ciudad"
-                                   value="{{ $edificio->ciudad }}"
-                                   class="form-control"
-                                   id="ciudad{{ $edificio->id }}"
-                                   disabled>
-
-                            <button type="button"
-                                    class="btn btn-outline-secondary"
-                                    onclick="toggleField('ciudad{{ $edificio->id }}')">
-                                Modificar
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                    <!-- CP -->
-                    <div class="mb-3">
-
-                        <label class="form-label fw-bold">Código Postal</label>
-
-                        <div class="input-group">
-
-                            <input type="text"
-                                   name="codigo_postal"
-                                   value="{{ $edificio->codigo_postal }}"
-                                   class="form-control"
-                                   id="cp{{ $edificio->id }}"
-                                   disabled>
-
-                            <button type="button"
-                                    class="btn btn-outline-secondary"
-                                    onclick="toggleField('cp{{ $edificio->id }}')">
-                                Modificar
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <!-- FOOTER -->
-                <div class="modal-footer">
-
-                    <button type="button"
-                            class="btn btn-secondary"
-                            data-bs-dismiss="modal">
-                        Cancelar
-                    </button>
-
-                    <button type="submit"
-                            class="btn btn-success">
-                        Guardar cambios
-                    </button>
-
-                </div>
-
-            </form>
 
         </div>
 
-    </div>
-
-</div>
+    @endforeach
 
 @endforeach

@@ -46,7 +46,7 @@
                     @foreach(auth()->user()->edificiosAdmin as $edificio)
 
                         <div class="mb-4 edificio-block"
-                            data-edificio="{{ $edificio->id }}">
+                             data-edificio="{{ $edificio->id }}">
 
                             <!-- TITULO EDIFICIO -->
                             <h6 class="fw-bold border-bottom pb-1">
@@ -65,23 +65,61 @@
 
                                     <div class="d-flex justify-content-between align-items-center">
 
-                                        <!-- INFO USUARIO -->
+                                        <!-- INFO -->
                                         <div>
                                             <strong>{{ $usuario->nombre }}</strong><br>
                                             <small class="text-muted">{{ $usuario->email }}</small>
                                         </div>
 
-                                        <!-- BADGE ROL -->
-                                        <span class="badge
-                                            @if($usuario->role == 'empleado') bg-warning
-                                            @elseif($usuario->role == 'propietario') bg-primary
-                                            @elseif($usuario->role == 'presidente') bg-success
-                                            @else bg-secondary
-                                            @endif">
+                                        <!-- ACCIONES -->
+                                        <div class="d-flex align-items-center gap-2">
 
-                                            {{ $usuario->role == 'propietario' ? 'vecino' : $usuario->role }}
+                                            <!-- BADGE -->
+                                            <span class="badge
+                                                @if($usuario->role == 'empleado') bg-warning
+                                                @elseif($usuario->role == 'propietario') bg-primary
+                                                @elseif($usuario->role == 'presidente') bg-success
+                                                @else bg-secondary
+                                                @endif">
 
-                                        </span>
+                                                {{ $usuario->role == 'propietario' ? 'vecino' : $usuario->role }}
+
+                                            </span>
+
+                                            <!-- VER -->
+                                            <button
+                                                type="button"
+                                                class="btn btn-sm btn-primary"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#userModal{{ $usuario->id }}">
+
+                                                Ver
+
+                                            </button>
+
+                                            <!-- MODIFICAR -->
+                                            <button
+                                                type="button"
+                                                class="btn btn-sm btn-warning"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#editarUsuarioModal{{ $usuario->id }}">
+
+                                                Editar
+
+                                            </button>
+
+                                            <!-- ELIMINAR -->
+                                            <button
+                                                type="button"
+                                                class="btn btn-sm btn-danger"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#eliminarUsuarioModal{{ $usuario->id }}">
+
+                                                Eliminar
+
+                                            </button>
+
+                                        </div>
 
                                     </div>
 

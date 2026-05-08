@@ -70,4 +70,14 @@
 
 @include('admin.partials.usuarios.lista-usuario-modal')
 
+@include('admin.partials.usuarios.detalle-usuario-modal')
+
+@include('admin.partials.usuarios.eliminar-usuario-modal')
+
+@include('admin.partials.usuarios.modificar-usuario-modal')
+
+@include('admin.partials.usuarios.crear-usuario-modal')
+
 <script src="{{ asset('js/admin/filtros-usuarios.js') }}"></script>
+
+<script src="{{ asset('js/admin/modificar-user.js') }}"></script>
