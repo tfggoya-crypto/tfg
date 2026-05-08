@@ -87,7 +87,7 @@
                                                     type="button"
                                                     class="btn btn-sm btn-primary"
                                                     data-bs-toggle="modal"
-                                                    ata-bs-target="#incidenciaModal{{ $incidencia->id }}"
+                                                    data-bs-target="#incidenciaModal{{ $incidencia->id }}"
                                                     data-bs-dismiss="modal">
 
                                                     Ver
