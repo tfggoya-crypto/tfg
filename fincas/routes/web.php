@@ -26,7 +26,15 @@ Route::get('/admin', [AdminController::class, 'index'])->middleware(RoleAdminMid
 
 // Propietario
 Route::get('/propietario', [PropietarioController::class, 'index'])->middleware(RolePropietarioMiddleware::class);
-
+Route::post('/propietario/incidencias/{incidencia}/comentarios', [PropietarioController::class, 'guardarComentario'])
+    ->middleware(['auth', RolePropietarioMiddleware::class])
+    ->name('propietario.comentarios.store');
+Route::post('/propietario/incidencias', [IncidenciaController::class, 'store'])
+    ->middleware(['auth', RolePropietarioMiddleware::class])
+    ->name('propietario.incidencias.store');
+    Route::post('/propietario/cambiar-password', [AuthController::class, 'changePassword'])
+    ->middleware(['auth', RolePropietarioMiddleware::class])
+    ->name('propietario.password.update');
 // Empleado
 Route::get('/empleado', [EmpleadoController::class, 'index'])->middleware(RoleEmpleadoMiddleware::class);
 Route::post('/empleado/cambiar-password', [AuthController::class, 'changePassword'])
@@ -35,10 +43,6 @@ Route::post('/empleado/cambiar-password', [AuthController::class, 'changePasswor
 Route::post('/incidencias', [IncidenciaController::class, 'store'])
     ->middleware(['auth', RoleEmpleadoMiddleware::class])
     ->name('incidencias.store');
-Route::patch('/incidencias/{incidencia}/estado', [IncidenciaController::class, 'cambiarEstado'])
-    ->middleware(['auth', RoleEmpleadoMiddleware::class])
-    ->name('incidencias.estado');
-
     
 // Edificio
 Route::get('/edificios', [EdificioController::class, 'index'])
