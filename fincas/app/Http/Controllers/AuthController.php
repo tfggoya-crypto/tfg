@@ -8,15 +8,49 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
+    private function redirigirSegunRol($user)
+    {
+        if ($user->role === 'admin') {
+            return redirect('/admin');
+        }
+
+        if ($user->role === 'propietario') {
+            return redirect('/propietario');
+        }
+
+        if ($user->role === 'empleado') {
+            return redirect('/empleado');
+        }
+
+        return redirect('/');
+    }
+
+    private function redirigirSiSesionActiva()
+    {
+        if (!Auth::check()) {
+            return null;
+        }
+
+        return $this->redirigirSegunRol(Auth::user());
+    }
+
     // Mostrar login
     public function showLogin()
     {
+        if ($redireccion = $this->redirigirSiSesionActiva()) {
+            return $redireccion;
+        }
+
         return view('login');
     }
 
     // Procesar login
     public function login(Request $request)
     {
+        if ($redireccion = $this->redirigirSiSesionActiva()) {
+            return $redireccion;
+        }
+
         $request->validate([
             'username' => 'required',
             'password' => 'required'
@@ -26,22 +60,7 @@ class AuthController extends Controller
 
             $request->session()->regenerate();
 
-            // Redirección según rol
-            $user = Auth::user();
-
-            if ($user->role === 'admin') {
-                return redirect('/admin');
-            }
-
-            if ($user->role === 'propietario') {
-                return redirect('/propietario');
-            }
-
-            if ($user->role === 'empleado') {
-                return redirect('/empleado');
-            }
-
-            return redirect('/');
+            return $this->redirigirSegunRol(Auth::user());
         }
 
         return back()->withErrors([
