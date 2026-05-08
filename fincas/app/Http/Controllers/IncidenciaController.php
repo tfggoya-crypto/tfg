@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Incidencia;
+use App\Models\ComentarioIncidencia;
 use Illuminate\Http\Request;
 
 class IncidenciaController extends Controller
@@ -158,5 +159,34 @@ class IncidenciaController extends Controller
         ]);
 
         return back()->with('success', 'Incidencia creada correctamente');
+    }
+
+    public function guardarComentario(Request $request, Incidencia $incidencia)
+    {
+        $user = auth()->user();
+
+        // Solo puede comentar incidencias
+        // de edificios que administra
+        if (
+            ! $user->edificiosAdmin
+                ->contains($incidencia->edificio_id)
+        ) {
+            abort(403);
+        }
+
+        $request->validate([
+            'texto' => 'required|string|max:1000',
+        ]);
+
+        ComentarioIncidencia::create([
+            'texto'         => $request->texto,
+            'incidencia_id' => $incidencia->id,
+            'user_id'       => auth()->id(),
+        ]);
+
+        return back()->with(
+            'success',
+            'Comentario añadido correctamente.'
+        );
     }
 }

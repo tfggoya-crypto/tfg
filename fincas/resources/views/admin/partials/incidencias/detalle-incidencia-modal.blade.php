@@ -41,7 +41,10 @@
 
                         <!-- ESTADO EDITABLE -->
                         <div class="mb-3">
-                            <label class="fw-bold">Estado</label>
+
+                            <label class="fw-bold">
+                                Estado
+                            </label>
 
                             <form method="POST"
                                   action="{{ route('incidencias.estado', $incidencia) }}"
@@ -72,11 +75,15 @@
                                 </select>
 
                             </form>
+
                         </div>
 
                         <!-- PRIORIDAD EDITABLE -->
                         <div class="mb-3">
-                            <label class="fw-bold">Prioridad</label>
+
+                            <label class="fw-bold">
+                                Prioridad
+                            </label>
 
                             <form method="POST"
                                   action="{{ route('incidencias.prioridad', $incidencia) }}"
@@ -107,6 +114,7 @@
                                 </select>
 
                             </form>
+
                         </div>
 
                         <hr>
@@ -120,6 +128,81 @@
                             {{ $edificio->direccion }} · {{ $edificio->ciudad }}
                         </p>
 
+                        <hr>
+
+                        <!-- COMENTARIOS -->
+                        <h6 class="fw-bold">
+                            Comentarios
+                        </h6>
+
+                        @if($incidencia->comentarios->count() > 0)
+
+                            <div class="mb-3"
+                                 style="max-height: 250px; overflow-y:auto;">
+
+                                @foreach($incidencia->comentarios as $comentario)
+
+                                    <div class="p-2 mb-2 rounded"
+                                         style="background:#F3F4F6;">
+
+                                        <small class="text-muted">
+
+                                            {{ $comentario->user->nombre }}
+                                            —
+                                            {{ $comentario->created_at->format('d/m/Y H:i') }}
+
+                                        </small>
+
+                                        <p class="mb-0">
+                                            {{ $comentario->texto }}
+                                        </p>
+
+                                    </div>
+
+                                @endforeach
+
+                            </div>
+
+                        @else
+
+                            <p class="text-muted">
+                                No hay comentarios todavía.
+                            </p>
+
+                        @endif
+
+                        <hr>
+
+                        <!-- AÑADIR COMENTARIO -->
+                        <h6 class="fw-bold">
+                            Añadir comentario
+                        </h6>
+
+                        <form method="POST"
+                              action="{{ route('comentarios.store', $incidencia) }}">
+
+                            @csrf
+
+                            <div class="mb-3">
+
+                                <textarea
+                                    class="form-control"
+                                    name="texto"
+                                    rows="3"
+                                    placeholder="Escribe tu comentario..."
+                                    required></textarea>
+
+                            </div>
+
+                            <button type="submit"
+                                    class="btn btn-primary">
+
+                                Enviar comentario
+
+                            </button>
+
+                        </form>
+
                     </div>
 
                     <!-- FOOTER -->
@@ -127,7 +210,9 @@
 
                         <button class="btn btn-secondary"
                                 data-bs-dismiss="modal">
+
                             Cerrar
+
                         </button>
 
                         <button

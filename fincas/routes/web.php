@@ -81,6 +81,14 @@ Route::delete('/incidencias/{incidencia}', [IncidenciaController::class, 'destro
     ->middleware(['auth'])
     ->name('incidencias.destroy');
 
+    //Comentarios
+    Route::post(
+    '/incidencias/{incidencia}/comentarios',
+        [IncidenciaController::class, 'guardarComentario']
+        )
+            ->middleware(['auth', RoleAdminMiddleware::class])
+            ->name('comentarios.store');
+
 // Usuario
 Route::post('/users', [UserController::class, 'store'])
     ->middleware(['auth', RoleAdminMiddleware::class])
