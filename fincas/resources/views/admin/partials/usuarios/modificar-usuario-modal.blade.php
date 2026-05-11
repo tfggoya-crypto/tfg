@@ -36,98 +36,64 @@
                             <!-- NOMBRE -->
                             <div class="mb-3">
 
-                                <label class="form-label fw-bold">
-                                    Nombre
-                                </label>
+                                <label class="form-label fw-bold">Nombre</label>
 
-                                <div class="d-flex gap-2">
-
-                                    <input type="text"
-                                           id="nombre-{{ $usuario->id }}"
-                                           name="nombre"
-                                           value="{{ $usuario->nombre }}"
-                                           class="form-control"
-                                           disabled>
-
-                                    <button type="button"
-                                            class="btn btn-outline-primary"
-                                            onclick="toggleField('nombre-{{ $usuario->id }}')">
-
-                                        Modificar
-
-                                    </button>
-
-                                </div>
+                                <input type="text"
+                                       name="nombre"
+                                       value="{{ $usuario->nombre }}"
+                                       class="form-control">
 
                             </div>
 
                             <!-- EMAIL -->
                             <div class="mb-3">
 
-                                <label class="form-label fw-bold">
-                                    Email
-                                </label>
+                                <label class="form-label fw-bold">Email</label>
 
-                                <div class="d-flex gap-2">
-
-                                    <input type="email"
-                                           id="email-{{ $usuario->id }}"
-                                           name="email"
-                                           value="{{ $usuario->email }}"
-                                           class="form-control"
-                                           disabled>
-
-                                    <button type="button"
-                                            class="btn btn-outline-primary"
-                                            onclick="toggleField('email-{{ $usuario->id }}')">
-
-                                        Modificar
-
-                                    </button>
-
-                                </div>
+                                <input type="email"
+                                       name="email"
+                                       value="{{ $usuario->email }}"
+                                       class="form-control">
 
                             </div>
 
                             <hr>
 
-                            <!-- PERFIL (ROLE + SUBROLE) -->
+                            <!-- PERFIL -->
                             <div class="mb-3">
 
                                 <label class="form-label fw-bold">
                                     Tipo de usuario
                                 </label>
 
-                                <select name="perfil"
-                                        class="form-select"
-                                        onchange="setUserRole(this, {{ $usuario->id }})">
+                                <select class="form-select"
+                                        data-user-id="{{ $usuario->id }}"
+                                        onchange="setUserRole(this)">
 
-                                    <option value="">
-                                        Selecciona perfil
-                                    </option>
+                                    <option value="">Selecciona perfil</option>
 
                                     <option value="propietario|vecino"
-                                        @if($usuario->role=='propietario' && $usuario->subrole=='vecino') selected @endif>
+                                        @selected($usuario->role=='propietario' && $usuario->subrole=='vecino')>
                                         Vecino
                                     </option>
 
                                     <option value="propietario|presidente"
-                                        @if($usuario->role=='propietario' && $usuario->subrole=='presidente') selected @endif>
+                                        @selected($usuario->role=='propietario' && $usuario->subrole=='presidente')>
                                         Presidente
                                     </option>
 
                                     <option value="empleado|conserje"
-                                        @if($usuario->role=='empleado' && $usuario->subrole=='conserje') selected @endif>
+                                        @selected($usuario->role=='empleado' && $usuario->subrole=='conserje')>
                                         Conserje
                                     </option>
 
                                     <option value="empleado|jardinero"
-                                        @if($usuario->role=='empleado' && $usuario->subrole=='jardinero') selected @endif>
+                                        @selected($usuario->role=='empleado' && $usuario->subrole=='jardinero')>
                                         Jardinero
                                     </option>
 
                                     <option value="empleado|limpieza"
-                                        @if($usuario->role=='empleado' && $usuario->subrole=='limpieza') selected @endif>
+                                        @selected($usuario->role=='empleado' && $usuario->subrole=='limpieza')>
                                         Limpieza
                                     </option>
 
@@ -135,9 +101,16 @@
 
                             </div>
 
-                            <!-- CAMPOS OCULTOS -->
-                            <input type="hidden" name="role" id="role-{{ $usuario->id }}">
-                            <input type="hidden" name="subrole" id="subrole-{{ $usuario->id }}">
+                            <!-- HIDDEN INPUTS -->
+                            <input type="hidden"
+                                   name="role"
+                                   id="role-{{ $usuario->id }}"
+                                   value="{{ $usuario->role }}">
+
+                            <input type="hidden"
+                                   name="subrole"
+                                   id="subrole-{{ $usuario->id }}"
+                                   value="{{ $usuario->subrole }}">
 
                         </div>
 
