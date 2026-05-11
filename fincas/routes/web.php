@@ -9,15 +9,19 @@ use App\Http\Controllers\PresidenteController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\IncidenciaController;
 use App\Http\Controllers\EdificioController;
+use App\Http\Controllers\ConsultaController;
+use App\Http\Controllers\TecnicoController;
 use App\Http\Middleware\RoleAdminMiddleware;
 use App\Http\Middleware\RolePropietarioMiddleware;
 use App\Http\Middleware\RolePresidenteMiddleware;
 use App\Http\Middleware\RoleEmpleadoMiddleware;
+use App\Http\Middleware\RoleTecnicoMiddleware;
 
 // Página principal
 Route::get('/', fn() => view('welcome'));
 Route::get('/contacto', fn() => view('contacto'))->name('contacto');
 Route::get('/acercade', fn() => view('acercade'))->name('acercade');
+Route::post('/contacto', [ConsultaController::class, 'store'])->name('contacto.store');
 
 // Login
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
@@ -103,3 +107,7 @@ Route::put('/users/{user}', [UserController::class, 'update'])
     ->name('users.update');
 Route::delete('/users/{user}', [UserController::class, 'destroy'])
     ->name('users.destroy');
+
+
+// Técnico
+Route::get('/tecnico', [TecnicoController::class, 'index'])->middleware(RoleTecnicoMiddleware::class);

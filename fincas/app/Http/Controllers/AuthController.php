@@ -14,6 +14,10 @@ class AuthController extends Controller
             return redirect('/admin');
         }
 
+        if ($user->role === 'tecnico') {
+            return redirect('/tecnico');
+        }
+
         if ($user->role === 'propietario') {
 
             if($user->subrole === 'presidente') {

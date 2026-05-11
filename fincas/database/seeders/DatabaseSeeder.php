@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             EmpleadoPerfilSeeder::class,
             AvisoSeeder::class,
             DocumentoSeeder::class,
+            ConsultaSeeder::class,
         ]);
     }
 }
