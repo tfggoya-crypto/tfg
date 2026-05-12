@@ -3,6 +3,49 @@
 @section('title','Panel de Empleado')
 
 @section('content')
+<style>
+    .carta {
+        border-radius: 12px;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        min-height: 300px;
+        height: 100%;
+        box-shadow: 0 0 10px rgba(0,0,0,.05);
+    }
+
+    .carta:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    .carta .card-body {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+
+    .carta .acciones-card {
+        margin-top: auto;
+        display: flex;
+        flex-direction: column;
+        gap: .75rem;
+    }
+
+    .iconos{
+        
+        border-radius: 8px;
+        padding: 8px;
+    }
+
+    .icono-edifico{
+        color: #34a853;
+    }
+
+    .icono-incidencia{
+        color: #eb4536;
+    }
+
+</style>
+
 
 <div class="container py-4">
 
@@ -28,118 +71,170 @@
 
         <!-- TARJETA 1: EDIFICIO -->
         <div class="col-md-3">
+            <div class="row">
+                <div class="col">
+                    <div class="card shadow-sm h-100 carta" style="border-top: #34a853 4px solid;">
 
-            <div class="card shadow-sm h-100">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between mb-3">
+                                <h5 class="fw-bold mb-3">Edificio</h5>
+                                <div class="iconos" style="background-color: #84da9b;">  
+                                    <i class="bi bi-building-fill icono-edifico fs-5"></i>
+                                </div>
+                            </div>
 
-                <div class="card-body">
+                            
 
-                    <h5 class="fw-bold mb-3">Edificio asignado</h5>
+                            @if(auth()->user()->edificio)
+                                <ul class="list-group list-group-flush mb-3">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        {{ auth()->user()->edificio->nombre }} -
+                                        {{ auth()->user()->edificio->direccion }}
+                                    </li>
+                                </ul>
 
-                    @if(auth()->user()->edificio)
-                        <ul class="list-group list-group-flush mb-3">
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                {{ auth()->user()->edificio->nombre }} -
-                                {{ auth()->user()->edificio->direccion }}
-                            </li>
-                        </ul>
+                                <hr>
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <button class="btn btn-light border-0 fw-semibold text-secondary d-inline-flex align-items-center justify-content-center gap-2 px-4 py-2"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#modalEdificio">
 
-                        <button class="btn btn-primary"
-                                data-bs-toggle="modal"
-                                data-bs-target="#modalEdificio">
+                                    Ver Detalles
+                                    <i class="bi bi-chevron-right"></i>
+                                </button>
+                                </div>
+                                
+                                
 
-                            Ver Detalles
-
-                        </button>
-
-                    @else
-                        <p>No tienes edificio asignado</p>
-                    @endif
-
+                            @else
+                                <p>No tienes edificio asignado</p>
+                            @endif
+                        </div>
+                    </div>
                 </div>
-
+            
             </div>
+
+            
 
         </div>
 
 
         <!-- TARJETA 2: INCIDENCIAS -->
         <div class="col-md-3">
+            <div class="row">
+                <div class="col">
+                    <div class="card shadow-sm h-100 carta" style="border-top: #eb4536 4px solid;">
 
-            <div class="card shadow-sm h-100">
+                        <div class="card-body">
 
-                <div class="card-body">
+                            <div class="d-flex justify-content-between mb-3">
+                                <h5 class="fw-bold mb-3">Incidencias</h5>
+                                <div class="iconos" style="background-color: #eb8278;">
+                                    <i class="bi bi-exclamation-circle-fill fs-5 icono-incidencia"></i>
+                                </div>
+                            </div>
 
-                    <h5 class="fw-bold mb-3">Incidencias</h5>
+                            <ul class="list-group list-group-flush mb-3">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <span>Total de incidencias:</span>
+                                        <span class="badge bg-danger rounded-pill">
+                                            {{ auth()->user()->edificio ? auth()->user()->edificio->incidencias->count() : 0 }}
+                                        </span>
+                                    </li>
+                            </ul>
 
-                    <div class="mb-3">
-                        <button class="btn btn-primary w-100"
-                                data-bs-toggle="modal"
-                                data-bs-target="#modalIncidencias">
+                            <hr>
+                            <div class="text-center">
+                                <div class="mb-3">
+                                    <button class="btn btn-light border-0 fw-semibold text-secondary d-inline-flex align-items-center justify-content-center gap-2 px-4 py-2"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#modalIncidencias">
 
-                            Mostrar Incidencias
+                                        Mostrar Incidencias
+                                        <i class="bi bi-chevron-right"></i>
+                                    </button>
+                                </div>   
+                            </div>
+                            
 
-                        </button>
+                            <div class="text-center">
+                               <div class="mb-3">
+                                    <button class="btn btn-light border-0 fw-semibold text-secondary d-inline-flex align-items-center justify-content-center gap-2 px-4 py-2"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#modaladdIncidencias">
+
+                                        Agregar Incidencia
+
+                                        <i class="bi bi-plus-circle"></i>
+                                    </button>
+                                </div> 
+                            </div>
+            
+
+                        </div>
+
                     </div>
-
-                    <div class="mb-3">
-                        <button class="btn btn-primary w-100"
-                                data-bs-toggle="modal"
-                                data-bs-target="#modaladdIncidencias">
-
-                            Agregar Incidencia
-
-                        </button>
-                    </div>
-
                 </div>
-
             </div>
+
+            
 
         </div>
 
         <!-- TARJETA 3: FACTURA -->
         <div class="col-md-3">
+            <div class="row">
+                <div class="col">
+                    <div class="card shadow-sm h-100 carta">
 
-            <div class="card shadow-sm h-100">
+                        <div class="card-body">
 
-                <div class="card-body">
+                            <h5 class="card-title">
+                                Facturas del edificio
+                            </h5>
 
-                    <h5 class="card-title">
-                        Facturas del edificio
-                    </h5>
+                            <button class="btn btn-secondary w-100" disabled>
+                                Próximamente
+                            </button>
 
-                    <button class="btn btn-secondary w-100" disabled>
-                        Próximamente
-                    </button>
+                        </div>
 
+                    </div>
                 </div>
-
             </div>
+
+            
 
         </div>
 
         <!-- TARJETA 4: USUARIO -->
         <div class="col-md-3">
+            <div class="row">
+                <div class="col">
+                    <div class="card shadow-sm h-100 carta">
 
-            <div class="card shadow-sm h-100">
+                        <div class="card-body">
 
-                <div class="card-body">
+                            <h5 class="card-title">
+                                Información del usuario: {{ auth()->user()->username }}
+                            </h5>
 
-                    <h5 class="card-title">
-                        Información del usuario: {{ auth()->user()->username }}
-                    </h5>
+                            <button class="btn btn-primary w-100"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#modalUsuario">
 
-                    <button class="btn btn-primary w-100"
-                            data-bs-toggle="modal"
-                            data-bs-target="#modalUsuario">
+                                Mostrar Información
 
-                        Mostrar Información
+                            </button>
 
-                    </button>
+                        </div>
 
+                     </div>
                 </div>
-
             </div>
+
+            
 
         </div>
 
@@ -179,7 +274,7 @@
 
     <!-- MODAL INCIDENCIAS -->
     <div class="modal fade" id="modalIncidencias" tabindex="-1">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
 
                 <div class="modal-header">
@@ -188,34 +283,21 @@
                 </div>
 
                 <div class="modal-body">
-
-                    @if(auth()->user()->edificio->incidencias->count() > 0)
-
+                    @if(auth()->user()->edificio && auth()->user()->edificio->incidencias->count() > 0)
                         <ul class="list-group">
-
                             @foreach(auth()->user()->edificio->incidencias as $incidencia)
-
                                 <li class="list-group-item">
                                     <strong>{{ $incidencia->titulo }}</strong><br>
-                                    {{ $incidencia->descripcion }}<br>
-                                    <small class="text-muted">
-                                        Estado: {{ $incidencia->estado }}
-                                    </small>
-                                    <br>
+                                    {{ $incidencia->descripcion }}
+
                                     <div class="d-flex gap-2 mt-3 flex-wrap">
                                         <form method="POST" action="{{ route('incidencias.estado', $incidencia) }}" id="formEstado-{{ $incidencia->id }}">
                                             @csrf
                                             @method('PATCH')
                                             <select class="form-select" name="estado" data-incidencia-id="{{ $incidencia->id }}" onchange="setEstadoIncidencia(this)">
-                                                <option value="pendiente" @selected($incidencia->estado === 'pendiente')>
-                                                    Pendiente
-                                                </option>
-                                                <option value="en_proceso" @selected($incidencia->estado === 'en_proceso')>
-                                                    En proceso
-                                                </option>
-                                                <option value="resuelta" @selected($incidencia->estado === 'resuelta')>
-                                                    Resuelta
-                                                </option>
+                                                <option value="pendiente" @selected($incidencia->estado === 'pendiente')>Pendiente</option>
+                                                <option value="en_proceso" @selected($incidencia->estado === 'en_proceso')>En proceso</option>
+                                                <option value="resuelta" @selected($incidencia->estado === 'resuelta')>Resuelta</option>
                                             </select>
                                         </form>
 
@@ -230,15 +312,11 @@
                                         </button>
                                     </div>
                                 </li>
-
                             @endforeach
-
                         </ul>
-
                     @else
-                        <p>No hay incidencias en este edificio.</p>
+                        <p class="mb-0">No hay incidencias en este edificio.</p>
                     @endif
-
                 </div>
 
                 <div class="modal-footer">
@@ -252,7 +330,7 @@
 
     <!-- MODAL CAMBIAR ESTADO -->
     <div class="modal fade" id="modalCambiarEstadoIncidencia" tabindex="-1">
-        <div class="modal-dialog modal-right-estados mt-5">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
 
                 <div class="modal-header">
@@ -265,13 +343,8 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                        Cancelar
-                    </button>
-
-                    <button type="button" class="btn btn-warning" onclick="confirmarCambioEstado()">
-                        Cambiar estado
-                    </button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-warning" onclick="confirmarCambioEstado()">Cambiar estado</button>
                 </div>
 
             </div>
@@ -294,16 +367,12 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                        Cancelar
-                    </button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
 
                     <form method="POST" id="formEliminarIncidencia" action="">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-danger">
-                            Eliminar
-                        </button>
+                        <button type="submit" class="btn btn-danger">Eliminar</button>
                     </form>
                 </div>
 
@@ -314,7 +383,7 @@
 
     <!-- MODAL AGREGAR INCIDENCIA -->
     <div class="modal fade" id="modaladdIncidencias" tabindex="-1">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
 
                 <div class="modal-header">
@@ -323,7 +392,6 @@
                 </div>
 
                 <div class="modal-body">
-
                     <form method="POST" action="{{ route('incidencias.store') }}">
                         @csrf
 
@@ -346,12 +414,8 @@
                             </select>
                         </div>
 
-                        <button type="submit" class="btn btn-primary">
-                            Agregar Incidencia
-                        </button>
-
+                        <button type="submit" class="btn btn-primary w-100">Agregar Incidencia</button>
                     </form>
-
                 </div>
 
                 <div class="modal-footer">
