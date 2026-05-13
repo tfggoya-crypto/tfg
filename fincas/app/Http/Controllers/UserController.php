@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\BienvenidaUsuarioMail;
 
 class UserController extends Controller
 {
@@ -47,17 +48,30 @@ class UserController extends Controller
 
         $username = $this->generarUsername($validated['nombre']);
 
-        User::create([
+        $passwordTemporal = $username;
+
+        $user = User::create([
             'nombre' => $validated['nombre'],
             'email' => $validated['email'],
             'username' => $username,
-            'password' => Hash::make($username),
+            'password' => Hash::make($passwordTemporal),
             'role' => $validated['role'],
             'subrole' => $validated['subrole'] ?? null,
             'edificio_id' => $validated['edificio_id'],
         ]);
 
-        return back()->with('success', 'Usuario creado correctamente');
+        Mail::to($user->email)
+            ->send(
+                new BienvenidaUsuarioMail(
+                    $user,
+                    $passwordTemporal
+                )
+            );
+
+        return back()->with(
+            'success',
+            'Usuario creado y correo enviado correctamente'
+        );
     }
 
     public function show(User $user)
