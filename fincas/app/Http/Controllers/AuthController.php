@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
@@ -53,7 +54,7 @@ class AuthController extends Controller
             return $redireccion;
         }
 
-        return view('login');
+        return view('login.login');
     }
 
     // Procesar login
@@ -68,9 +69,15 @@ class AuthController extends Controller
             'password' => 'required'
         ]);
 
-        if (Auth::attempt($request->only('username', 'password'))) {
+        if (Auth::attempt($request->only('username', 'password'), $request->filled('remember_user'))) {
 
             $request->session()->regenerate();
+
+            if ($request->filled('remember_user')) {
+                Cookie::queue('remember_username',$request->username, 60 * 24 * 30 );
+            } else {
+                Cookie::queue(Cookie::forget('remember_username'));
+            }
 
             return $this->redirigirSegunRol(Auth::user());
         }

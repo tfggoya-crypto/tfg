@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <title>Inicio</title>
 
+    <link rel="icon" type="image/png" href="/assets/logo_fincapp.png" sizes="64x64">
+    <link rel="icon" type="image/png" href="/assets/logo_fincapp.png" sizes="128x128">
+    <link rel="apple-touch-icon" href="/assets/logo_fincapp.png" sizes="360x360">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>

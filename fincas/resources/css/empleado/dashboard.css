@@ -1,0 +1,64 @@
+.carta {
+	border-radius: 12px;
+	transition: transform 0.2s ease, box-shadow 0.2s ease;
+	min-height: 300px;
+	height: 100%;
+	box-shadow: 0 0 10px rgba(0, 0, 0, .05);
+}
+
+.carta:hover {
+	transform: translateY(-5px);
+	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.carta .card-body {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+
+.carta .acciones-card {
+	margin-top: auto;
+	display: flex;
+	flex-direction: column;
+	gap: .75rem;
+}
+
+.iconos {
+	border-radius: 8px;
+	padding: 8px;
+}
+
+.icono-edifico {
+	color: #34a853;
+}
+
+.icono-incidencia {
+	color: #eb4536;
+}
+
+.icono-user {
+	color: #4287f5;
+}
+
+.icono-factura {
+	color: #a07a06;
+}
+
+@media (max-width: 1183px) {
+	.carta {
+		min-height: 370px;
+	}
+}
+
+@media (max-width: 768px) {
+	.carta {
+		min-height: 340px;
+	}
+}
+
+@media (max-width: 576px) {
+	.carta {
+		min-height: 320px;
+	}
+}
