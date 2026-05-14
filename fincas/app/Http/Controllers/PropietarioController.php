@@ -15,7 +15,7 @@ class PropietarioController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
-        return view('propietario', compact('user', 'incidencias'));
+        return view('propietario.propietario', compact('user', 'incidencias'));
     }
 
     public function guardarComentario(Request $request, Incidencia $incidencia)
