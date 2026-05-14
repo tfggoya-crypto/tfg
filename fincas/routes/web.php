@@ -32,7 +32,9 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/admin', [AdminController::class, 'index'])->middleware(RoleAdminMiddleware::class);
 
 // Presidente
-Route::get('/presidente', [PresidenteController::class, 'index'])->middleware(RolePresidenteMiddleware::class);
+Route::get('/presidente', [PresidenteController::class, 'index'])
+    ->middleware(RolePresidenteMiddleware::class)
+    ->name('presidente.index');
 
 
 // Propietario
