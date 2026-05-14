@@ -174,6 +174,14 @@
     }
 </style>
 
+@if(session('success'))
+    <div class="container pt-4">
+        <div class="alert alert-success mb-0" role="alert">
+            {{ session('success') }}
+        </div>
+    </div>
+@endif
+
 <div class="row bg-light py-5 text-center reveal-from-top reveal-delay-1">
     <div class="col container">
         <h1 class="display-5 fw-bold">Contacto</h1>
@@ -195,7 +203,8 @@
             <span class="step-dot" data-step-indicator="3">3</span>
         </div>
 
-        <form id="contactForm" novalidate>
+        <form id="contactForm" method="POST" action="{{ route('contacto.store') }}" novalidate>
+            @csrf
             <div class="step-panel active" data-step-panel="1">
                 <h2 class="h4 fw-bold mb-4">Información Personal</h2>
 
@@ -209,7 +218,7 @@
                         <input type="text" class="form-control form-control-lg" id="apellidos" name="apellidos" required>
                     </div>
                     <div class="col-12">
-                        <label for="email" class="form-label">Correo Electrónico </label>
+                        <label for="email" class="form-label">Correo Electrónico</label>
                         <input type="email" class="form-control form-control-lg" id="email" name="email" placeholder="Ej. tuemail@gmail.com" required>
                     </div>
                     <div class="col-12">
@@ -231,15 +240,7 @@
 
                 <div class="d-grid gap-3">
                     <label class="consult-option d-flex gap-3 align-items-start">
-                        <input class="form-check-input mt-1" type="radio" name="tipo_consulta" value="consulta_tecnica" required checked>
-                        <span>
-                            <span class="d-block fw-semibold fs-5">Incidencia en la comunidad</span>
-                            <span class="text-secondary">Reportar averías, mantenimiento o problemas en zonas comunes</span>
-                        </span>
-                    </label>
-
-                    <label class="consult-option d-flex gap-3 align-items-start">
-                        <input class="form-check-input mt-1" type="radio" name="tipo_consulta" value="queja_denuncia" required>
+                        <input class="form-check-input mt-1" type="radio" name="tipo_consulta" value="facturacion_pagos" required>
                         <span>
                             <span class="d-block fw-semibold fs-5">Facturación y Pagos</span>
                             <span class="text-secondary">Consultas sobre cuotas, recibos o estado de pagos</span>
@@ -255,7 +256,7 @@
                     </label>
 
                     <label class="consult-option d-flex gap-3 align-items-start">
-                        <input class="form-check-input mt-1" type="radio" name="tipo_consulta" value="colaboracion" required>
+                        <input class="form-check-input mt-1" type="radio" name="tipo_consulta" value="sugerencias_mejoras" required>
                         <span>
                             <span class="d-block fw-semibold fs-5">Sugerencias y Mejoras</span>
                             <span class="text-secondary">Propuestas para mejorar la gestión de la comunidad</span>
@@ -263,7 +264,7 @@
                     </label>
 
                     <label class="consult-option d-flex gap-3 align-items-start">
-                        <input class="form-check-input mt-1" type="radio" name="tipo_consulta" value="colaboracion" required>
+                        <input class="form-check-input mt-1" type="radio" name="tipo_consulta" value="otra_consulta" required>
                         <span>
                             <span class="d-block fw-semibold fs-5">Otra consulta</span>
                             <span class="text-secondary">Define en el siguiente paso detalladamente el motivo de tu consulta</span>
@@ -302,7 +303,7 @@
                     </label>
                 </div>
 
-                <p class="muted-note mb-4">Demo local: el formulario valida datos en cliente y no persiste todavía en la base de datos.</p>
+                <p class="muted-note mb-4">Completa y envía el formulario para guardar la consulta en la base de datos.</p>
 
                 <div class="d-flex gap-3">
                     <button type="button" class="btn btn-step btn-outline-secondary flex-fill" data-back>
@@ -443,15 +444,7 @@
 
         botonConfirmarEnvio.addEventListener('click', () => {
             ocultarModalConfirmacion();
-            formulario.reset();
-            pasoActual = 1;
-            actualizarProgreso();
-            marcarOpcionSeleccionada();
-            alertaExito.classList.remove('d-none');
-
-            window.setTimeout(() => {
-                alertaExito.classList.add('d-none');
-            }, 4000);
+            formulario.submit();
         });
 
         botonCancelarEnvio.addEventListener('click', ocultarModalConfirmacion);

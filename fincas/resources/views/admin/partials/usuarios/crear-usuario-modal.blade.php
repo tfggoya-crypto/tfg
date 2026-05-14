@@ -65,38 +65,19 @@
 
                         <select class="form-select"
                                 id="perfilUsuario"
-                                onchange="rellenarRolSubrol(this)"
+                                data-mode="create"
+                                onchange="setUserRole(this)"
                                 required>
 
-                            <option value="">
-                                Selecciona un perfil
-                            </option>
+                            <option value="">Selecciona un perfil</option>
 
-                            <!-- PROPIETARIOS -->
-                            <option value="propietario|vecino">
-                                Vecino
-                            </option>
+                            <option value="propietario|vecino">Vecino</option>
+                            <option value="propietario|presidente">Presidente</option>
 
-                            <option value="propietario|presidente">
-                                Presidente
-                            </option>
-
-                            <!-- EMPLEADOS -->
-                            <option value="empleado|conserje">
-                                Conserje
-                            </option>
-
-                            <option value="empleado|jardinero">
-                                Jardinero
-                            </option>
-
-                            <option value="empleado|limpieza">
-                                Limpieza
-                            </option>
-
-                            <option value="empleado|otros">
-                                Otros
-                            </option>
+                            <option value="empleado|conserje">Conserje</option>
+                            <option value="empleado|jardinero">Jardinero</option>
+                            <option value="empleado|limpieza">Limpieza</option>
+                            <option value="empleado|otros">Otros</option>
 
                         </select>
 

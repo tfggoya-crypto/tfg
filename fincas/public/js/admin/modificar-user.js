@@ -1,16 +1,40 @@
-function setUserRole(select, id) {
+function setUserRole(select) {
 
     const value = select.value;
-
     if (!value) return;
 
-    const parts = value.split('|');
+    const [role, subrole] = value.split('|');
 
-    if (parts.length !== 2) return;
+    const mode = select.dataset.mode || 'edit';
 
-    const role = parts[0];
-    const subrole = parts[1];
+    // =========================
+    // CREATE USER
+    // =========================
+    if (mode === 'create') {
 
-    document.getElementById('role-' + id).value = role;
-    document.getElementById('subrole-' + id).value = subrole;
+        const roleInput = document.getElementById('roleInput');
+        const subroleInput = document.getElementById('subroleInput');
+
+        if (roleInput && subroleInput) {
+            roleInput.value = role;
+            subroleInput.value = subrole;
+        }
+
+        return;
+    }
+
+    // =========================
+    // EDIT USER
+    // =========================
+    const userId = select.dataset.userId;
+
+    if (!userId) return;
+
+    const roleEdit = document.getElementById('role-' + userId);
+    const subroleEdit = document.getElementById('subrole-' + userId);
+
+    if (roleEdit && subroleEdit) {
+        roleEdit.value = role;
+        subroleEdit.value = subrole;
+    }
 }
