@@ -47,7 +47,12 @@ Route::post('/propietario/incidencias', [IncidenciaController::class, 'store'])
     ->middleware(['auth', RolePropietarioMiddleware::class])
     ->name('propietario.password.update');
 // Empleado
-Route::get('/empleado', [EmpleadoController::class, 'index'])->middleware(RoleEmpleadoMiddleware::class);
+Route::get('/empleado', [EmpleadoController::class, 'index'])
+    ->middleware(RoleEmpleadoMiddleware::class)
+    ->name('empleado.index');
+Route::post('/empleado/facturas', [EmpleadoController::class, 'storeFactura'])
+    ->middleware(['auth', RoleEmpleadoMiddleware::class])
+    ->name('empleado.facturas.store');
 Route::post('/empleado/cambiar-password', [AuthController::class, 'changePassword'])
     ->middleware(['auth', RoleEmpleadoMiddleware::class])
     ->name('empleado.password.update');
