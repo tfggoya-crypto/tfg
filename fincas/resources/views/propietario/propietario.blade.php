@@ -3,6 +3,7 @@
 @section('title', 'Panel Propietario')
 
 @section('content')
+<link rel="stylesheet" href="{{ asset('css/empleado/dashboard.css') }}">
 
 <div class="container py-4">
 
@@ -27,8 +28,10 @@
     <div class="row g-4">
         @include('propietario.cards.incidencias-card')
         @include('propietario.cards.usuario-card')
+        @include('propietario.cards.edificio-card')
     </div>
 
+    @include('propietario.partials.edificio.ver-edificio-modal')
     @include('propietario.partials.incidencias.lista-incidencias-modal')
     @include('propietario.partials.incidencias.detalle-incidencia-modal')
     @include('propietario.partials.incidencias.crear-incidencia-modal')

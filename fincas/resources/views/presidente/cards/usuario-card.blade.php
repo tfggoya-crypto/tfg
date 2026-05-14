@@ -1,31 +1,32 @@
 <div class="col-md-4">
-    <div class="card shadow-sm h-100">
-        <div class="card-body d-flex flex-column">
+    <div class="card shadow-sm h-100 carta" style="border-top: #4287f5 4px solid;">
+        <div class="card-body">
 
-            <h5 class="fw-bold mb-3">Mi información</h5>
-
-            <p class="text-muted small">
-                Consulta y gestiona tus datos personales.
-            </p>
-
-            <div class="mb-3 p-3 border rounded bg-light small">
-                <div class="mb-1">
-                    <strong>Usuario:</strong> {{ auth()->user()->username }}
-                </div>
-                <div class="mb-1">
-                    <strong>Email:</strong> {{ auth()->user()->email }}
-                </div>
-                <div>
-                    <strong>Rol:</strong>
-                    <span class="badge bg-success">Presidente</span>
+            <div class="d-flex justify-content-between mb-3">
+                <h5 class="fw-bold mb-3">Mi información</h5>
+                <div class="iconos" style="background-color: #8cb5f7;">
+                    <i class="bi bi-person-circle fs-5 icono-user"></i>
                 </div>
             </div>
 
-            <button class="btn btn-primary w-100 mt-auto"
-                    data-bs-toggle="modal"
-                    data-bs-target="#modalMiInfo">
-                Ver mi información
-            </button>
+            <ul class="list-group list-group-flush mb-3">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    {{ auth()->user()->nombre }} ({{ auth()->user()->username }})
+                </li>
+            </ul>
+
+            <hr>
+
+            <div class="d-flex justify-content-center align-items-center" style="height: 100%;">
+                <div class="mb-3">
+                    <button class="btn btn-light border-0 fw-semibold text-secondary d-inline-flex align-items-center justify-content-center gap-2 px-4 py-2"
+                            data-bs-toggle="modal"
+                            data-bs-target="#modalMiInfo">
+                        Ver mi información
+                        <i class="bi bi-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
 
         </div>
     </div>

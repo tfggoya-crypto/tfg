@@ -36,6 +36,10 @@ Route::get('/presidente', [PresidenteController::class, 'index'])
     ->middleware(RolePresidenteMiddleware::class)
     ->name('presidente.index');
 
+Route::post('/presidente/incidencias', [PresidenteController::class, 'crearIncidencia'])
+    ->middleware(['auth', RolePresidenteMiddleware::class])
+    ->name('presidente.incidencias.store');
+
 
 // Propietario
 Route::get('/propietario', [PropietarioController::class, 'index'])->middleware(RolePropietarioMiddleware::class);

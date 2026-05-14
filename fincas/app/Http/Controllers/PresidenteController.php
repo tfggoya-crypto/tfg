@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Incidencia;
 use Illuminate\Http\Request;
 
 class PresidenteController extends Controller
@@ -45,5 +46,25 @@ class PresidenteController extends Controller
             'empleados',
             'presidentes',
         ));
+    }
+
+    public function crearIncidencia(Request $request)
+    {
+        $request->validate([
+            'titulo'      => 'required|string|max:255',
+            'descripcion' => 'required|string',
+            'prioridad'   => 'required|in:baja,media,alta',
+        ]);
+
+        Incidencia::create([
+            'titulo'      => $request->titulo,
+            'descripcion' => $request->descripcion,
+            'prioridad'   => $request->prioridad,
+            'estado'      => 'pendiente',
+            'user_id'     => auth()->id(),
+            'edificio_id' => auth()->user()->edificio_id,
+        ]);
+
+        return back()->with('success', 'Incidencia creada correctamente.');
     }
 }

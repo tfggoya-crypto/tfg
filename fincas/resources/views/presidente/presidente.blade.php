@@ -3,6 +3,7 @@
 @section('title', 'Panel Presidente')
 
 @section('content')
+<link rel="stylesheet" href="{{ asset('css/empleado/dashboard.css') }}">
 
 <div class="container py-4">
 
@@ -45,6 +46,7 @@
 
     @include('presidente.partials.incidencias.lista-incidencias-modal')
     @include('presidente.partials.incidencias.detalle-incidencia-modal')
+    @include('presidente.partials.incidencias.crear-incidencia-modal')
     @include('presidente.partials.usuario.mi-info-modal')
     @include('presidente.partials.usuarios.lista-usuarios-modal')
     @include('presidente.partials.usuarios.detalle-usuario-modal')
