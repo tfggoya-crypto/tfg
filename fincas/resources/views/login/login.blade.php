@@ -4,6 +4,40 @@
 
 @section('content')
 <style>
+    .reveal-from-top {
+        animation: revealFromTop .7s cubic-bezier(.2, .8, .2, 1) both;
+    }
+
+    .reveal-delay-1 {
+        animation-delay: .08s;
+    }
+
+    .reveal-delay-2 {
+        animation-delay: .2s;
+    }
+
+    .reveal-delay-3 {
+        animation-delay: .28s;
+    }
+
+    @keyframes revealFromTop {
+        from {
+            opacity: 0;
+            transform: translateY(-28px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .reveal-from-top {
+            animation: none;
+        }
+    }
+
     .btn-acceder {
         background-color: #212529;
         color: #fff;
@@ -16,29 +50,50 @@
         transform: translateY(-2px);
         box-shadow: 0 10px 20px rgba(33, 37, 41, 0.25);
     }
+
+    @media (max-width: 767px){
+
+        .img-login{
+            height: 250px;
+        }
+
+        h1.display-4{
+            font-size: 2rem;
+            text-align: center;
+        }
+
+        p.lead{
+            text-align: center;
+            margin-bottom: 2rem !important;
+        }
+
+        .card{
+            margin-top: 1rem;
+        }
+    }
 </style>
 <div class="row justify-content-center gx-lg-5 gy-4">
-    <div class="col">
+    <div class="col-12 col-lg-8">
         <div class="d-flex flex-column align-items-center justify-content-center h-100">
 
 
-            <h1 class="display-4 fw-bold text-secondary mb-3">Bienvenido a Fincapp</h1>
+            <h1 class="display-4 fw-bold text-secondary mb-3 reveal-from-top reveal-delay-1">Bienvenido a Fincapp</h1>
 
-            <p class="lead text-muted mb-5">Tu plataforma de gestión de fincas eficiente y fácil de usar</p>
+            <p class="lead text-muted mb-5 reveal-from-top reveal-delay-2">Tu plataforma de gestión de fincas eficiente y fácil de usar</p>
 
-            <img src="/assets/img_login.png" class="d-block w-100 rounded-4" style="height: 500px; object-fit: cover;" alt="imglogin">
+            <img src="/assets/img_login.png" class="d-block w-100 rounded-4 reveal-from-top reveal-delay-3" style="height: 500px; object-fit: cover;" alt="imglogin">
 
         </div>
 
     </div>
 
 
-    <div class="col-md-4">
+    <div class="col-12 col-lg-4 ">
             
 
 
 
-        <div class="card border-0 shadow-lg rounded-5 p-4" style="width: 100%; max-width: 520px; height: 100%;" >
+        <div class="card border-0 shadow-lg rounded-5 p-4 reveal-from-top reveal-delay-3" style="width: 100%; max-width: 520px; height: 100%; margin: 0 auto;" >
 
             <div class="card-body">
                 <h1 class="text-center fw-bold display-5 mb-5" style="color:#212529;">Iniciar sesión</h1>

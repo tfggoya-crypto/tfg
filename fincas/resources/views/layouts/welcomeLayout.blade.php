@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <title>Inicio</title>
 
-    <link rel="icon" type="image/png" href="/assets/logo_fincapp.png" sizes="64x64">
-    <link rel="icon" type="image/png" href="/assets/logo_fincapp.png" sizes="128x128">
-    <link rel="apple-touch-icon" href="/assets/logo_fincapp.png" sizes="360x360">
+    <link rel="icon" type="image/png" href="/assets/logo_fincapp.png" sizes="364x364">
+    <link rel="icon" type="image/png" href="/assets/logo_fincapp.png" sizes="728x728">
+    <link rel="apple-touch-icon" href="/assets/logo_fincapp.png" sizes="1456x1456">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
@@ -52,18 +52,23 @@
 
     <!-- IZQUIERDA -->
     <span class="navbar-brand mb-0">
-      Administración de Fincas
+      <div class="d-flex align-items-center justify-content-center h-100">
+            <a href="/" style="text-decoration: none; display: flex; align-items: center;">
+                <img src="/assets/logo_fincapp.png" class="rounded-4" style="height: 50px; cursor: pointer;" alt="imglogin">
+                <span class="navbar-brand fs-4 ms-1">Fincapp</span>
+            </a>
+        </div>
     </span>
 
     <!-- CENTRO -->
     <div class="d-flex gap-3 position-absolute start-50 translate-middle-x">
-      <a href="/" class="nav-link text-light">Inicio</a>
-      <a href="/contacto" class="nav-link text-light">Contacto</a>
-      <a href="/acercade" class="nav-link text-light">Acerca de</a>
+      <a href="/" class="nav-link text-light fs-5">Inicio</a>
+      <a href="/contacto" class="nav-link text-light fs-5">Contacto</a>
+      <a href="/acercade" class="nav-link text-light fs-5">Acerca de</a>
     </div>
 
     <!-- DERECHA -->
-    <a href="/login" class="btn btn-outline-light btn-sm">
+    <a href="/login" class="btn btn-outline-light btn-lg">
       Iniciar sesión
     </a>
 
