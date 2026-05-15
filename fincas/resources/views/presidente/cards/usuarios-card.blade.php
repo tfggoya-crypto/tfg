@@ -1,36 +1,41 @@
 <div class="col-md-4">
-    <div class="card shadow-sm h-100">
-        <div class="card-body d-flex flex-column">
+    <div class="card shadow-sm h-100 carta" style="border-top: #34a853 4px solid;">
+        <div class="card-body">
 
-            <h5 class="fw-bold mb-3">Usuarios del edificio</h5>
-
-            <p class="text-muted small">
-                Consulta los vecinos y empleados de tu comunidad.
-            </p>
-
-            <div class="mb-3 p-3 border rounded bg-light">
-                <div class="d-flex justify-content-between mb-2">
-                    <span class="small">Vecinos</span>
-                    <span class="badge bg-primary">{{ $vecinos }}</span>
-                </div>
-                <div class="d-flex justify-content-between mb-2">
-                    <span class="small">Empleados</span>
-                    <span class="badge bg-warning">{{ $empleados }}</span>
-                </div>
-                <div class="d-flex justify-content-between">
-                    <span class="small">Presidentes</span>
-                    <span class="badge bg-success">{{ $presidentes }}</span>
+            <div class="d-flex justify-content-between mb-3">
+                <h5 class="fw-bold mb-3">Usuarios del edificio</h5>
+                <div class="iconos" style="background-color: #84da9b;">
+                    <i class="bi bi-people-fill fs-5 icono-edifico"></i>
                 </div>
             </div>
 
-            <button class="btn btn-primary w-100 mt-auto"
-                    data-bs-toggle="modal"
-                    data-bs-target="#modalUsuarios">
-                Ver usuarios del edificio
-                @if($usuarios->count() > 0)
-                    <span class="badge bg-light text-dark ms-1">{{ $usuarios->count() }}</span>
-                @endif
-            </button>
+            <ul class="list-group list-group-flush mb-3">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span>Vecinos</span>
+                    <span class="badge bg-primary rounded-pill">{{ $vecinos }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span>Empleados</span>
+                    <span class="badge bg-warning rounded-pill">{{ $empleados }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span>Presidentes</span>
+                    <span class="badge bg-success rounded-pill">{{ $presidentes }}</span>
+                </li>
+            </ul>
+
+            <hr>
+
+            <div class="d-flex justify-content-center align-items-center">
+                <div class="mb-3">
+                    <button class="btn btn-light border-0 fw-semibold text-secondary d-inline-flex align-items-center justify-content-center gap-2 px-4 py-2"
+                            data-bs-toggle="modal"
+                            data-bs-target="#modalUsuarios">
+                        Ver usuarios del edificio
+                        <i class="bi bi-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
 
         </div>
     </div>
