@@ -49,9 +49,9 @@
                              data-edificio="{{ $edificio->id }}">
 
                             <!-- TITULO EDIFICIO -->
-                            <h6 class="fw-bold border-bottom pb-1">
+                            <h5 class="fw-bold border-bottom pb-1">
                                 {{ $edificio->nombre }}
-                            </h6>
+                            </h5>
 
                             @php
                                 $usuariosEdificio = $usuarios->where('edificio_id', $edificio->id);

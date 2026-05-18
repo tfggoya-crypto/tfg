@@ -1,70 +1,103 @@
-<div class="col-md-4">
+<div class="col-12 col-md-6 col-lg-4">
 
-    <div class="card shadow-sm h-100">
+    <div class="row">
 
-        <div class="card-body">
+        <div class="col">
 
-            <h5 class="fw-bold mb-3">Incidencias</h5>
+            <div class="card shadow-sm h-100 carta"
+                 style="border-top: #eb4536 4px solid;">
 
-            <p class="text-muted">
-                Gestión de incidencias de los edificios.
-            </p>
+                <div class="card-body">
 
-            <!-- LISTA CORTA -->
-            <ul class="list-group list-group-flush mb-3">
+                    <!-- HEADER -->
+                    <div class="d-flex justify-content-between mb-3">
 
-                @foreach(auth()->user()->incidencias->take(3) as $incidencia)
+                        <h5 class="fw-bold mb-3">
+                            Incidencias
+                        </h5>
 
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div class="iconos"
+                             style="background-color: #eb8278;">
 
-                        <div class="d-flex flex-column">
-
-                            <span class="fw-semibold">
-                                {{ $incidencia->titulo ?? 'Incidencia #' . $incidencia->id }}
-                            </span>
-
-                            <small class="text-muted">
-                                {{ $incidencia->estado ?? 'Sin estado' }}
-                            </small>
+                            <i class="bi bi-exclamation-circle-fill fs-5 icono-incidencia"></i>
 
                         </div>
 
-                        <button
-                            class="btn btn-sm btn-outline-primary"
-                            data-bs-toggle="modal"
-                            data-bs-target="#incidenciaModal{{ $incidencia->id }}">
+                    </div>
 
-                            Ver
+                    <!-- DESCRIPCIÓN -->
+                    <p class="text-muted">
+                        Gestión de incidencias de los edificios.
+                    </p>
+
+                    <!-- LISTA -->
+                    <ul class="list-group list-group-flush mb-3">
+
+                        @foreach(auth()->user()->incidencias->take(3) as $incidencia)
+
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+
+                                <div class="d-flex flex-column">
+
+                                    <span class="fw-semibold">
+                                        {{ $incidencia->titulo ?? 'Incidencia #' . $incidencia->id }}
+                                    </span>
+
+                                    <small class="text-muted">
+                                        {{ $incidencia->estado ?? 'Sin estado' }}
+                                    </small>
+
+                                </div>
+
+                                <button
+                                    class="btn btn-sm btn-outline-primary"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#incidenciaModal{{ $incidencia->id }}">
+
+                                    Ver
+
+                                </button>
+
+                            </li>
+
+                        @endforeach
+
+                    </ul>
+
+                    <hr>
+
+                    <!-- BOTONES -->
+                    <div class="d-flex flex-column gap-2">
+
+                        <button
+                            type="button"
+                            class="btn btn-light border-0 fw-semibold text-secondary d-inline-flex align-items-center justify-content-center gap-2 px-4 py-2"
+                            data-bs-toggle="modal"
+                            data-bs-target="#modalIncidencias">
+
+                            Ver todas las incidencias
+
+                            <i class="bi bi-chevron-right"></i>
 
                         </button>
 
-                    </li>
+                        <button
+                            type="button"
+                            class="btn btn-light border-0 fw-semibold text-secondary d-inline-flex align-items-center justify-content-center gap-2 px-4 py-2"
+                            data-bs-toggle="modal"
+                            data-bs-target="#crearIncidenciaModal">
 
-                @endforeach
+                            Crear incidencia
 
-            </ul>
+                            <i class="bi bi-plus-circle"></i>
 
-            <!-- BOTÓN VER TODAS -->
-            <button
-                type="button"
-                class="btn btn-primary w-100"
-                data-bs-toggle="modal"
-                data-bs-target="#modalIncidencias">
+                        </button>
 
-                Ver todas las incidencias
+                    </div>
 
-            </button>
+                </div>
 
-            <!-- BOTÓN CREAR -->
-            <button
-                type="button"
-                class="btn btn-success w-100 mt-2"
-                data-bs-toggle="modal"
-                data-bs-target="#crearIncidenciaModal">
-
-                Crear incidencia
-
-            </button>
+            </div>
 
         </div>
 
@@ -83,4 +116,3 @@
 @include('admin.partials.incidencias.eliminar-incidencia-modal')
 
 <script src="{{ asset('js/admin/modificar.js') }}"></script>
-
