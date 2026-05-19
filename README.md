@@ -152,6 +152,4 @@ Proyecto creado como parte del TFG. Para dudas técnicas contactar con el autor 
 
 Revisa `composer.json` y la raíz del repositorio para la información de licencia; por defecto Laravel usa MIT.
 
----
 
-Si quieres, adapto el README con más detalle (capturas, ejemplos de datos o pasos para Docker). Indica qué prefieres.
