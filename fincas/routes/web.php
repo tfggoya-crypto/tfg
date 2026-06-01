@@ -75,23 +75,29 @@ Route::get('/edificios/{edificio}', [EdificioController::class, 'show'])
     ->name('edificios.show');
 
 Route::post('/edificios', [EdificioController::class, 'store'])
+    ->middleware(['auth', RoleAdminMiddleware::class])
     ->name('edificios.store');
 
 Route::put('/edificios/{edificio}', [EdificioController::class, 'update'])
+    ->middleware(['auth', RoleAdminMiddleware::class])
     ->name('edificios.update');
     
 Route::delete('/edificios/{edificio}', [EdificioController::class, 'destroy'])
+    ->middleware(['auth', RoleAdminMiddleware::class])
     ->name('edificios.destroy');
 
 
 // Incidencia
 Route::put('/incidencias/{incidencia}', [IncidenciaController::class, 'update'])
+    ->middleware(['auth'])
     ->name('incidencias.update');
 
 Route::patch('/incidencias/{incidencia}/estado', [IncidenciaController::class, 'cambiarEstado'])
+    ->middleware(['auth', RoleAdminMiddleware::class])
     ->name('incidencias.estado');
 
 Route::patch('/incidencias/{incidencia}/prioridad', [IncidenciaController::class, 'cambiarPrioridad'])
+    ->middleware(['auth', RoleAdminMiddleware::class])
     ->name('incidencias.prioridad');
 
 Route::post('/admin/incidencias', [IncidenciaController::class, 'storeAdmin'])
@@ -115,8 +121,10 @@ Route::post('/users', [UserController::class, 'store'])
     ->middleware(['auth', RoleAdminMiddleware::class])
     ->name('users.store');
 Route::put('/users/{user}', [UserController::class, 'update'])
+    ->middleware(['auth', RoleAdminMiddleware::class])
     ->name('users.update');
 Route::delete('/users/{user}', [UserController::class, 'destroy'])
+    ->middleware(['auth', RoleAdminMiddleware::class])
     ->name('users.destroy');
 
 

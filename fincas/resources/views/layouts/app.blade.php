@@ -7,9 +7,9 @@
     <!-- 🔐 CSRF TOKEN (IMPORTANTE) -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <link rel="icon" type="image/png" href="/assets/logo_fincapp.png" sizes="364x364">
-    <link rel="icon" type="image/png" href="/assets/logo_fincapp.png" sizes="728x728">
-    <link rel="apple-touch-icon" href="/assets/logo_fincapp.png" sizes="1456x1456">
+    <link rel="icon" type="image/png" href="/assets/logo_fynkoo.png" sizes="364x364">
+    <link rel="icon" type="image/png" href="/assets/logo_fynkoo.png" sizes="728x728">
+    <link rel="apple-touch-icon" href="/assets/logo_fynkoo.png" sizes="1456x1456">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -38,8 +38,8 @@
     <div class="container">
         <div class="d-flex align-items-center justify-content-center h-100">
             <a href="/" style="text-decoration: none; display: flex; align-items: center;">
-                <img src="/assets/logo_fincapp.png" class="rounded-4" style="height: 50px; cursor: pointer;" alt="imglogin">
-                <span class="navbar-brand fs-4 ms-1">Fincapp</span>
+                <img src="/assets/logo_fynkoo.png" class="rounded-4" style="height: 50px; cursor: pointer;" alt="imglogin">
+                <span class="navbar-brand fs-4 ms-1">Fynkoo</span>
             </a>
         </div>
         

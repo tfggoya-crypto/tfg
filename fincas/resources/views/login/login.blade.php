@@ -81,7 +81,7 @@
 
             <p class="lead text-muted mb-5 reveal-from-top reveal-delay-2">Tu plataforma de gestión de fincas eficiente y fácil de usar</p>
 
-            <img src="/assets/img_login.png" class="d-block w-100 rounded-4 reveal-from-top reveal-delay-3" style="height: 500px; object-fit: cover;" alt="imglogin">
+            <img src="/assets/imagen_fynkoo.png" class="d-block w-100 rounded-4 reveal-from-top reveal-delay-3" style="height: 500px; object-fit: cover;" alt="imglogin">
 
         </div>
 
