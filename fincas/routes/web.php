@@ -40,6 +40,10 @@ Route::post('/presidente/incidencias', [PresidenteController::class, 'crearIncid
     ->middleware(['auth', RolePresidenteMiddleware::class])
     ->name('presidente.incidencias.store');
 
+Route::post('/presidente/cambiar-password', [AuthController::class, 'changePassword'])
+    ->middleware(['auth', RolePresidenteMiddleware::class])
+    ->name('presidente.password.update');
+
 
 // Propietario
 Route::get('/propietario', [PropietarioController::class, 'index'])->middleware(RolePropietarioMiddleware::class);

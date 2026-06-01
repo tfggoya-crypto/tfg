@@ -48,6 +48,7 @@
     @include('presidente.partials.incidencias.detalle-incidencia-modal')
     @include('presidente.partials.incidencias.crear-incidencia-modal')
     @include('presidente.partials.usuario.mi-info-modal')
+    @include('presidente.partials.usuario.cambiar-password-modal')
     @include('presidente.partials.usuarios.lista-usuarios-modal')
     @include('presidente.partials.usuarios.detalle-usuario-modal')
 

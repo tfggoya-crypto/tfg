@@ -38,6 +38,14 @@
                     </p>
                 @endif
 
+                <hr>
+
+                <button class="btn btn-primary"
+                        data-bs-toggle="modal"
+                        data-bs-target="#modalCambiarPasswordPresidente">
+                    Cambiar contraseña
+                </button>
+
             </div>
 
             <div class="modal-footer">

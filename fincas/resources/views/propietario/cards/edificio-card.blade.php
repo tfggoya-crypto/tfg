@@ -1,4 +1,4 @@
-<div class="col-md-4">
+<div class="col-12 col-md-6 col-lg-4">
     <div class="card shadow-sm h-100 carta" style="border-top: #34a853 4px solid;">
         <div class="card-body">
 
