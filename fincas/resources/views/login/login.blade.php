@@ -77,7 +77,7 @@
         <div class="d-flex flex-column align-items-center justify-content-center h-100">
 
 
-            <h1 class="display-4 fw-bold text-secondary mb-3 reveal-from-top reveal-delay-1">Bienvenido a Fincapp</h1>
+            <h1 class="display-4 fw-bold text-secondary mb-3 reveal-from-top reveal-delay-1">Bienvenido a Fynkoo</h1>
 
             <p class="lead text-muted mb-5 reveal-from-top reveal-delay-2">Tu plataforma de gestión de fincas eficiente y fácil de usar</p>
 
